@@ -1,0 +1,12 @@
+[mysql]
+
+# 设置mysql客户端默认字符集
+
+default-character-set=utf8
+
+[mysqld]
+
+# 设置3306端口
+port = 3306
+#表名大小写不敏感
+lower_case_table_names =1

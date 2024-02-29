@@ -1,0 +1,60 @@
+version: "3"
+services:
+  db:
+    image: mysql
+    ports:
+      - "1763:3306"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - mysql-conf:/etc/mysql/mysql.conf.d
+      - mysql-data:/var/lib/mysql
+      - mysql-log:/var/log/mysql
+    networks:
+      - dbNetwork
+    environment:
+      - MYSQL_ROOT_PASSWORD=o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG
+
+  redis:
+    image: redis
+    command: redis-server /etc/redis/redis.conf
+    ports:
+      - "1764:6379"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - dbNetwork
+    volumes:
+      - /home/dbManager/redis/conf/redis.conf:/etc/redis/redis.conf
+      - redis-data:/data
+
+networks:
+  dbNetwork:
+
+volumes:
+  mysql-conf:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dbManager/mysql/conf
+      o: bind
+  mysql-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/dbManager/mysql/data
+      o: bind
+  mysql-log:
+    driver_opts:
+      type: none
+      device: /home/dbManager/mysql/log
+      o: bind
+  redis-data:
+    driver_opts:
+      type: none
+      device: /home/dbManager/redis/data
+      o: bind

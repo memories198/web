@@ -1,0 +1,66 @@
+之前的忘记记了...
+
+2024/2/8
+    getJsonParam(c *gin.Context,param string)(value string, err error)解析多个参数时发现只有第一次使用该函数时可以解析成功后，之后的使用就只能的到空字符串。原来因为第一次读取了所有的json，并在函数调用完后把json释放了，第二次读的时候，因为第一次已经把所有的数据读走了并释放掉了，所以第二次和之后的读取什么也读不到，最后使用闭包，将jsonData只初始化和绑定一次解决了这一问题。
+
+    镜像名称到底是目标仓库repo还是标签tag，还是imageName，真是一个值得思考的问题，最后发现是repo（给repo打标签可以同时给tag的标签）
+2024/2/11
+    问题：怎么把json转为docker.CreateContainerOptions格式？
+    解决方法：
+        var config docker.CreateContainerOptions
+        err = json.Unmarshal(configBytes, &config)
+
+        可以看到，解析json就需要将接受到的json转为[]byte类型，但是c.BindJSON(&data)获得的json为map[string]interface{}格式。最后通过body, err := io.ReadAll(c.Request.Body)直接过的[]byte类型的json.
+    问题：
+        imagesInfo, err = docker.SearchImages(data["name"])
+        if err != nil {
+            c.JSON(400, gin.H{
+                "message": "查找镜像失败",
+                "error":   err.Error(),
+            })
+            return
+        } else if len(imagesInfo) == 0 {
+            c.JSON(200, gin.H{
+                "message": "未找到相关镜像",
+                "error":   err.Error(),
+            })
+            return
+        }
+        报错：runtime error: invalid memory address or nil pointer dereference
+    解决方法：
+        未查找到镜像信息时会返回nil，然后len(nil)就会报错。
+
+2024/2/12
+    错误：TypeError: Failed to execute 'fetch' on 'WorkerGlobalScope': Request with GET/HEAD method cannot have body.
+
+    解决方法： GET请求的body中不能有信息，所以要传递信息可以使用post请求
+
+    问题：client.BuildImage(docker.BuildImageOptions{
+       		Name:         imageName,
+       		InputStream:  fileStream,
+       		OutputStream: io.Discard,
+       	})
+       	当imageName是空字符时无法获取到创建的镜像的ID
+    解决方法：
+        强制用户为镜像取名称
+
+    问题：新构建的镜像可能会抢走老镜像的标签，使老镜像丢失原来的标签
+    解决方法：
+
+    发现：
+        root@ubuntu:~# docker images
+        REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+        hello        latest    ef5025458676   3 hours ago   72.8MB
+        nginx        <none>    605c77e624dd   2 years ago   141MB
+        alpine       latest    c059bfaa849c   2 years ago   5.59MB
+        ubuntu       latest    ba6acccedd29   2 years ago   72.8MB
+
+        这个MB其实是MiB
+
+2024/2/13
+    问题："github.com/fsouza/go-dockerclient"这个库并没有提供登录、登出私有镜像仓库和列出正在使用的镜像仓库的功能
+
+    后续需要开发的功能，保存用户登录私有镜像仓库的凭证
+
+2024/2/15
+    优化： 添加创建容器时，自动拉去不存在的镜像的功能
