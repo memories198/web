@@ -5,8 +5,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"time"
+	"web/config"
+	"web/dao"
 	docker "web/docker_server"
-	"web/user"
 )
 
 func getJsonParam(c *gin.Context) func(param string) (value string, err error) {
@@ -120,22 +121,20 @@ func images(all bool, username, server string) ([]Image, error) {
 }
 
 func setCookie(c *gin.Context, username string) error {
-	cookie, err := user.MemoryLPop(username)
+	_, err := dao.MemoryGetKey(username + "LoginTime")
 	if err == nil {
-		err = user.MemoryDelKey(cookie)
+		err = dao.MemoryDelKey(username + "LoginTime")
 		if err != nil {
 			return err
 		}
 	}
 
 	now := strconv.FormatInt(time.Now().UnixNano(), 10)
-	c.SetCookie("username", now, cookieOutTime, "/", "", false, true)
-	err = user.MemorySetKey(now, username, cookieOutTime)
+	c.SetCookie("loginTime", now, config.CookieExpireTime/1000, "/", "", false, true)
+	c.SetCookie("username", username, config.CookieExpireTime/1000, "/", "", false, true)
+	err = dao.MemorySetKey(username+"LoginTime", now, config.CookieExpireTime/1000)
 	if err != nil {
-		return err
-	}
-	err = user.MemoryLPush(username, now)
-	if err != nil {
+		c.SetCookie("loginTime", now, 0, "/", "", false, true)
 		return err
 	}
 	return nil

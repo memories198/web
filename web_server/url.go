@@ -2,8 +2,7 @@ package web_server
 
 import (
 	"github.com/gin-gonic/gin"
-	docker "web/docker_server"
-	"web/user"
+	"web/dao"
 )
 
 func registerUrl() {
@@ -48,7 +47,16 @@ func registerUrl() {
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		loginTime, err := c.Cookie("username")
+		loginTime, err := c.Cookie("loginTime")
+		if err != nil {
+			c.JSON(400, gin.H{
+				"message": "用户未登录",
+				"error":   err.Error(),
+			})
+			c.Abort()
+			return
+		}
+		username, err := c.Cookie("username")
 		if err != nil {
 			c.JSON(400, gin.H{
 				"message": "用户未登录",
@@ -58,35 +66,32 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		username, err := user.MemoryGetKey(loginTime)
+		lt, err := dao.MemoryGetKey(username + "LoginTime")
 		if err != nil {
 			c.JSON(400, gin.H{
-				"message": "用户未登录",
+				"message": "获取用户登录时间失败",
 				"error":   err.Error(),
 			})
 			c.Abort()
 			return
+		} else if lt != loginTime {
+			if err != nil {
+				c.JSON(400, gin.H{
+					"message": "用户名或登录时间不正确",
+				})
+				c.Abort()
+				return
+			}
 		}
 
 		err = setCookie(c, username)
 		if err != nil {
 			c.JSON(400, gin.H{
-				"message": "cookie设置失败",
+				"message": "更新cookie时间失败",
 			})
 			c.Abort()
 			return
 		}
-
-		clients, err := docker.InitUserClient(user.GetUserServers(username))
-		if err != nil {
-			c.JSON(400, gin.H{
-				"message": "初始化用户docker客户端失败",
-				"error":   err.Error(),
-			})
-			c.Abort()
-			return
-		}
-		userClients[username] = clients
 
 		c.Set("username", username)
 

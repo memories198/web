@@ -13,7 +13,7 @@ func Start() error {
 	r := gin.New()
 
 	r.Use(gin.Recovery())
-	file, err := os.OpenFile("./web.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0664)
+	file, err := os.OpenFile("./logs/web.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0664)
 	if err != nil {
 		return err
 	}

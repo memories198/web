@@ -2,18 +2,24 @@ package main
 
 import (
 	"log"
-	"web/user"
+	"web/config"
+	"web/dao"
 	web "web/web_server"
 )
 
 func main() {
-	err := user.DataBaseStart()
+	err := config.Init()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	err = dao.DataBaseStart()
 	if err != nil {
 		log.Println(err)
 		return
 	}
 
-	err = user.MemoryStart()
+	err = dao.MemoryStart()
 	if err != nil {
 		log.Println(err)
 		return
