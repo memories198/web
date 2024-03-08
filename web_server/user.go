@@ -7,7 +7,7 @@ import (
 	docker "web/docker_server"
 )
 
-var userClients = map[string]map[string]*docker.Client{}
+var userClients map[string]map[string]*docker.Client
 
 func userLogin(c *gin.Context) {
 	data := getJsonParam(c)

@@ -1,12 +1,37 @@
 package docker_server
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	docker "github.com/fsouza/go-dockerclient"
 	"strings"
+	"time"
 )
+
+func PingServer(server string) (*Client, error) {
+	cli, err := docker.NewClient(server)
+	if err != nil {
+		return nil, err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	c := make(chan string)
+	go func() {
+		err = cli.Ping()
+		if err == nil {
+			c <- ""
+		}
+	}()
+	select {
+	case <-ctx.Done():
+		return nil, errors.New("连接docker服务器超时")
+	case <-c:
+	}
+	return (*Client)(cli), err
+}
 
 func GetAllContainer(all bool, cli *Client) ([]docker.APIContainers, error) {
 	client := docker.Client(*cli)

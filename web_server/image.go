@@ -22,13 +22,6 @@ type Image struct {
 func imageList(c *gin.Context) {
 	username, _ := c.Get("username")
 	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
-	if exist == false {
-		c.JSON(400, gin.H{
-			"message": "docker服务器地址错误",
-		})
-		return
-	}
 
 	imagesInfo, err := images(false, username.(string), server)
 	if err != nil {

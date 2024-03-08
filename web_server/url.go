@@ -3,11 +3,12 @@ package web_server
 import (
 	"github.com/gin-gonic/gin"
 	"web/dao"
+	docker "web/docker_server"
 )
 
 func registerUrl() {
 	authorized := router.Group("/")
-	authorized.Use(AuthMiddleware())
+	authorized.Use(AuthMiddleware(), PingServer())
 	{
 		authorized.GET("/containers", containersList)
 		authorized.GET("/containers/all", containersListAll)
@@ -36,11 +37,15 @@ func registerUrl() {
 		authorized.POST("/repository/logout", repositoryLogout)
 		authorized.GET("/repositories/list", repositoriesList)
 
-		authorized.POST("/user/addServer", userAddServer)
-		authorized.POST("/user/removeServer", userRemoveServer)
-		authorized.GET("/user/listAllServer", userListAllServer)
 	}
 
+	user := router.Group("/user")
+	user.Use(AuthMiddleware())
+	{
+		user.POST("/user/addServer", userAddServer)
+		user.POST("/user/removeServer", userRemoveServer)
+		user.GET("/user/listAllServer", userListAllServer)
+	}
 	router.POST("/user/login", userLogin)
 	router.POST("/user/register", userRegister)
 
@@ -85,6 +90,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			}
 		}
 
+		//更新cookie时间
 		err = setCookie(c, username)
 		if err != nil {
 			c.JSON(400, gin.H{
@@ -96,6 +102,24 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		c.Set("username", username)
 
+		c.Next()
+	}
+}
+func PingServer() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		username, _ := c.Get("username")
+		server := c.Query("server")
+		cli, err := docker.PingServer(server)
+		if err != nil {
+			c.JSON(400, gin.H{
+				"message": "连接服务器失败",
+				"error":   err.Error(),
+			})
+			c.Abort()
+			return
+		}
+		userClients = map[string]map[string]*docker.Client{username.(string): {}}
+		userClients[username.(string)][server] = cli
 		c.Next()
 	}
 }

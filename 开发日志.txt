@@ -71,3 +71,9 @@
     问题：使用go协程初始化服务器连接时一直出错
     解决方法：向无缓存通道中发送数据，且没有接收方，导致一直阻塞
     问题：添加docker服务器时不会验证服务器是否可用
+    解决方法：添加PingServer中间件
+    问题：return *Client(cli)和return (*Client)(cli)根本不一样
+    解决方法：将return *Client(cli)修改为return (*Client)(cli)
+    问题：直接用cookie登录是用户的clients字典没有初始化，导致pingServer时使用userClients[username.(string)][server] = cli会访问空地址。因为用户的clients字典只有在登录时才会初始化
+    解决方法：在pingServer中添加初始化用户的clients字典的功能
+

@@ -6894,3 +6894,838 @@ Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-
 2024/03/08 15:44:01 D:/project/goProject/ongoing_project/web/dao/db.go:107
 [60.441ms] [rows:2] SELECT * FROM `servers` WHERE user_id = 1 AND `servers`.`deleted_at` IS NULL
 [GIN] 2024/03/08 - 15:44:06 | 200 |    5.2849365s |       127.0.0.1 | POST     "/user/login"
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[31.134ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.516ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[62.517ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.139ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[62.600ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.166ms] [rows:-] SELECT * FROM `users` LIMIT 1
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.486ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'users' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.509ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.060ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.014ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.007ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.014ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.389ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'servers' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.007ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.676ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:03:08 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[59.980ms] [rows:-] SELECT * FROM `servers` LIMIT 1
+
+2024/03/08 21:03:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[63.014ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'servers' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:03:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[31.007ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:03:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.337ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:03:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.419ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'web' AND table_name = 'servers' AND constraint_name = 'fk_servers_user'
+
+2024/03/08 21:03:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.508ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:03:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[60.286ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:03:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.199ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'servers' AND index_name = 'idx_servers_deleted_at'
+[GIN-debug] GET    /containers               --> web/web_server.containersList (5 handlers)
+[GIN-debug] GET    /containers/all           --> web/web_server.containersListAll (5 handlers)
+[GIN-debug] POST   /container/create         --> web/web_server.containerCreate (5 handlers)
+[GIN-debug] POST   /container/start          --> web/web_server.containerStart (5 handlers)
+[GIN-debug] POST   /container/stop           --> web/web_server.containerStop (5 handlers)
+[GIN-debug] POST   /container/kill           --> web/web_server.containerKill (5 handlers)
+[GIN-debug] POST   /container/remove         --> web/web_server.containerRemove (5 handlers)
+[GIN-debug] POST   /container/search         --> web/web_server.containerSearch (5 handlers)
+[GIN-debug] GET    /images                   --> web/web_server.imageList (5 handlers)
+[GIN-debug] GET    /images/all               --> web/web_server.imageListAll (5 handlers)
+[GIN-debug] POST   /image/buildByFile        --> web/web_server.imageBuildByFile (5 handlers)
+[GIN-debug] POST   /image/tag/remove         --> web/web_server.imageTagRemove (5 handlers)
+[GIN-debug] POST   /image/removeByID         --> web/web_server.imageRemoveByID (5 handlers)
+[GIN-debug] POST   /image/tag/rename         --> web/web_server.imageTagRename (5 handlers)
+[GIN-debug] POST   /images/search/repository --> web/web_server.imagesSearchRepository (5 handlers)
+[GIN-debug] POST   /images/search/local      --> web/web_server.imagesSearchLocal (5 handlers)
+[GIN-debug] POST   /image/addTag             --> web/web_server.imageAddTag (5 handlers)
+[GIN-debug] POST   /images/export            --> web/web_server.imagesExport (5 handlers)
+[GIN-debug] POST   /images/load              --> web/web_server.imagesLoad (5 handlers)
+[GIN-debug] POST   /image/pull               --> web/web_server.imagePull (5 handlers)
+[GIN-debug] POST   /image/push               --> web/web_server.imagePush (5 handlers)
+[GIN-debug] POST   /repository/login         --> web/web_server.repositoryLogin (5 handlers)
+[GIN-debug] POST   /repository/logout        --> web/web_server.repositoryLogout (5 handlers)
+[GIN-debug] GET    /repositories/list        --> web/web_server.repositoriesList (5 handlers)
+[GIN-debug] POST   /user/user/addServer      --> web/web_server.userAddServer (4 handlers)
+[GIN-debug] POST   /user/user/removeServer   --> web/web_server.userRemoveServer (4 handlers)
+[GIN-debug] GET    /user/user/listAllServer  --> web/web_server.userListAllServer (4 handlers)
+[GIN-debug] POST   /user/login               --> web/web_server.userLogin (3 handlers)
+[GIN-debug] POST   /user/register            --> web/web_server.userRegister (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+
+2024/03/08 21:03:23 D:/project/goProject/ongoing_project/web/dao/db.go:18
+[61.687ms] [rows:1] SELECT * FROM `users` WHERE username = 'root' AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2024/03/08 21:03:24 D:/project/goProject/ongoing_project/web/dao/db.go:104
+[62.168ms] [rows:1] SELECT * FROM `users` WHERE username = 'root' AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2024/03/08 21:03:24 D:/project/goProject/ongoing_project/web/dao/db.go:107
+[61.448ms] [rows:2] SELECT * FROM `servers` WHERE user_id = 1 AND `servers`.`deleted_at` IS NULL
+[GIN] 2024/03/08 - 21:03:29 | 200 |    5.2859213s |       127.0.0.1 | POST     "/user/login"
+[GIN] 2024/03/08 - 21:03:57 | 400 |    5.1221607s |       127.0.0.1 | GET      "/images?server=192.168.30.123:2376"
+
+2024/03/08 21:06:55 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.388ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[58.845ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[58.516ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.007ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[65.202ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.735ms] [rows:-] SELECT * FROM `users` LIMIT 1
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[59.020ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'users' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.010ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.636ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.940ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[28.511ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.223ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.924ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'servers' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.511ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[58.488ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.163ms] [rows:-] SELECT * FROM `servers` LIMIT 1
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[58.403ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'servers' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[28.510ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.264ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.146ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'web' AND table_name = 'servers' AND constraint_name = 'fk_servers_user'
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.007ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:06:56 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.210ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:06:57 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.398ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'servers' AND index_name = 'idx_servers_deleted_at'
+[GIN-debug] GET    /containers               --> web/web_server.containersList (5 handlers)
+[GIN-debug] GET    /containers/all           --> web/web_server.containersListAll (5 handlers)
+[GIN-debug] POST   /container/create         --> web/web_server.containerCreate (5 handlers)
+[GIN-debug] POST   /container/start          --> web/web_server.containerStart (5 handlers)
+[GIN-debug] POST   /container/stop           --> web/web_server.containerStop (5 handlers)
+[GIN-debug] POST   /container/kill           --> web/web_server.containerKill (5 handlers)
+[GIN-debug] POST   /container/remove         --> web/web_server.containerRemove (5 handlers)
+[GIN-debug] POST   /container/search         --> web/web_server.containerSearch (5 handlers)
+[GIN-debug] GET    /images                   --> web/web_server.imageList (5 handlers)
+[GIN-debug] GET    /images/all               --> web/web_server.imageListAll (5 handlers)
+[GIN-debug] POST   /image/buildByFile        --> web/web_server.imageBuildByFile (5 handlers)
+[GIN-debug] POST   /image/tag/remove         --> web/web_server.imageTagRemove (5 handlers)
+[GIN-debug] POST   /image/removeByID         --> web/web_server.imageRemoveByID (5 handlers)
+[GIN-debug] POST   /image/tag/rename         --> web/web_server.imageTagRename (5 handlers)
+[GIN-debug] POST   /images/search/repository --> web/web_server.imagesSearchRepository (5 handlers)
+[GIN-debug] POST   /images/search/local      --> web/web_server.imagesSearchLocal (5 handlers)
+[GIN-debug] POST   /image/addTag             --> web/web_server.imageAddTag (5 handlers)
+[GIN-debug] POST   /images/export            --> web/web_server.imagesExport (5 handlers)
+[GIN-debug] POST   /images/load              --> web/web_server.imagesLoad (5 handlers)
+[GIN-debug] POST   /image/pull               --> web/web_server.imagePull (5 handlers)
+[GIN-debug] POST   /image/push               --> web/web_server.imagePush (5 handlers)
+[GIN-debug] POST   /repository/login         --> web/web_server.repositoryLogin (5 handlers)
+[GIN-debug] POST   /repository/logout        --> web/web_server.repositoryLogout (5 handlers)
+[GIN-debug] GET    /repositories/list        --> web/web_server.repositoriesList (5 handlers)
+[GIN-debug] POST   /user/user/addServer      --> web/web_server.userAddServer (4 handlers)
+[GIN-debug] POST   /user/user/removeServer   --> web/web_server.userRemoveServer (4 handlers)
+[GIN-debug] GET    /user/user/listAllServer  --> web/web_server.userListAllServer (4 handlers)
+[GIN-debug] POST   /user/login               --> web/web_server.userLogin (3 handlers)
+[GIN-debug] POST   /user/register            --> web/web_server.userRegister (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN] 2024/03/08 - 21:07:21 | 400 |   17.9206226s |       127.0.0.1 | GET      "/images?server=192.168.30.123:2376"
+[GIN] 2024/03/08 - 21:08:50 | 400 |   12.3307536s |       127.0.0.1 | GET      "/images?server=192.168.30.123:2376"
+[GIN] 2024/03/08 - 21:11:04 | 400 |         1m11s |       127.0.0.1 | GET      "/images?server=192.168.30.123:2376"
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.509ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[62.099ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.423ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.222ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.639ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.009ms] [rows:-] SELECT * FROM `users` LIMIT 1
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[62.011ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'users' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.323ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[60.511ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[62.511ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.871ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.011ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.011ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'servers' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.506ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:11:09 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[60.871ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:11:10 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[60.511ms] [rows:-] SELECT * FROM `servers` LIMIT 1
+
+2024/03/08 21:11:10 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[61.753ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'servers' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:11:10 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.889ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:11:10 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[60.739ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:11:10 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[60.760ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'web' AND table_name = 'servers' AND constraint_name = 'fk_servers_user'
+
+2024/03/08 21:11:10 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.085ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:11:10 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[60.804ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:11:10 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[60.882ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'servers' AND index_name = 'idx_servers_deleted_at'
+[GIN-debug] GET    /containers               --> web/web_server.containersList (5 handlers)
+[GIN-debug] GET    /containers/all           --> web/web_server.containersListAll (5 handlers)
+[GIN-debug] POST   /container/create         --> web/web_server.containerCreate (5 handlers)
+[GIN-debug] POST   /container/start          --> web/web_server.containerStart (5 handlers)
+[GIN-debug] POST   /container/stop           --> web/web_server.containerStop (5 handlers)
+[GIN-debug] POST   /container/kill           --> web/web_server.containerKill (5 handlers)
+[GIN-debug] POST   /container/remove         --> web/web_server.containerRemove (5 handlers)
+[GIN-debug] POST   /container/search         --> web/web_server.containerSearch (5 handlers)
+[GIN-debug] GET    /images                   --> web/web_server.imageList (5 handlers)
+[GIN-debug] GET    /images/all               --> web/web_server.imageListAll (5 handlers)
+[GIN-debug] POST   /image/buildByFile        --> web/web_server.imageBuildByFile (5 handlers)
+[GIN-debug] POST   /image/tag/remove         --> web/web_server.imageTagRemove (5 handlers)
+[GIN-debug] POST   /image/removeByID         --> web/web_server.imageRemoveByID (5 handlers)
+[GIN-debug] POST   /image/tag/rename         --> web/web_server.imageTagRename (5 handlers)
+[GIN-debug] POST   /images/search/repository --> web/web_server.imagesSearchRepository (5 handlers)
+[GIN-debug] POST   /images/search/local      --> web/web_server.imagesSearchLocal (5 handlers)
+[GIN-debug] POST   /image/addTag             --> web/web_server.imageAddTag (5 handlers)
+[GIN-debug] POST   /images/export            --> web/web_server.imagesExport (5 handlers)
+[GIN-debug] POST   /images/load              --> web/web_server.imagesLoad (5 handlers)
+[GIN-debug] POST   /image/pull               --> web/web_server.imagePull (5 handlers)
+[GIN-debug] POST   /image/push               --> web/web_server.imagePush (5 handlers)
+[GIN-debug] POST   /repository/login         --> web/web_server.repositoryLogin (5 handlers)
+[GIN-debug] POST   /repository/logout        --> web/web_server.repositoryLogout (5 handlers)
+[GIN-debug] GET    /repositories/list        --> web/web_server.repositoriesList (5 handlers)
+[GIN-debug] POST   /user/user/addServer      --> web/web_server.userAddServer (4 handlers)
+[GIN-debug] POST   /user/user/removeServer   --> web/web_server.userRemoveServer (4 handlers)
+[GIN-debug] GET    /user/user/listAllServer  --> web/web_server.userListAllServer (4 handlers)
+[GIN-debug] POST   /user/login               --> web/web_server.userLogin (3 handlers)
+[GIN-debug] POST   /user/register            --> web/web_server.userRegister (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.506ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.770ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.251ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.739ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.750ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.270ms] [rows:-] SELECT * FROM `users` LIMIT 1
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.484ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'users' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.885ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.510ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.426ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.510ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'servers' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.485ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[54.905ms] [rows:-] SELECT * FROM `servers` LIMIT 1
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.185ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'servers' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:27 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.317ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:28 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.510ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'web' AND table_name = 'servers' AND constraint_name = 'fk_servers_user'
+
+2024/03/08 21:26:28 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.258ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:28 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.010ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:28 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.010ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'servers' AND index_name = 'idx_servers_deleted_at'
+[GIN-debug] GET    /containers               --> web/web_server.containersList (5 handlers)
+[GIN-debug] GET    /containers/all           --> web/web_server.containersListAll (5 handlers)
+[GIN-debug] POST   /container/create         --> web/web_server.containerCreate (5 handlers)
+[GIN-debug] POST   /container/start          --> web/web_server.containerStart (5 handlers)
+[GIN-debug] POST   /container/stop           --> web/web_server.containerStop (5 handlers)
+[GIN-debug] POST   /container/kill           --> web/web_server.containerKill (5 handlers)
+[GIN-debug] POST   /container/remove         --> web/web_server.containerRemove (5 handlers)
+[GIN-debug] POST   /container/search         --> web/web_server.containerSearch (5 handlers)
+[GIN-debug] GET    /images                   --> web/web_server.imageList (5 handlers)
+[GIN-debug] GET    /images/all               --> web/web_server.imageListAll (5 handlers)
+[GIN-debug] POST   /image/buildByFile        --> web/web_server.imageBuildByFile (5 handlers)
+[GIN-debug] POST   /image/tag/remove         --> web/web_server.imageTagRemove (5 handlers)
+[GIN-debug] POST   /image/removeByID         --> web/web_server.imageRemoveByID (5 handlers)
+[GIN-debug] POST   /image/tag/rename         --> web/web_server.imageTagRename (5 handlers)
+[GIN-debug] POST   /images/search/repository --> web/web_server.imagesSearchRepository (5 handlers)
+[GIN-debug] POST   /images/search/local      --> web/web_server.imagesSearchLocal (5 handlers)
+[GIN-debug] POST   /image/addTag             --> web/web_server.imageAddTag (5 handlers)
+[GIN-debug] POST   /images/export            --> web/web_server.imagesExport (5 handlers)
+[GIN-debug] POST   /images/load              --> web/web_server.imagesLoad (5 handlers)
+[GIN-debug] POST   /image/pull               --> web/web_server.imagePull (5 handlers)
+[GIN-debug] POST   /image/push               --> web/web_server.imagePush (5 handlers)
+[GIN-debug] POST   /repository/login         --> web/web_server.repositoryLogin (5 handlers)
+[GIN-debug] POST   /repository/logout        --> web/web_server.repositoryLogout (5 handlers)
+[GIN-debug] GET    /repositories/list        --> web/web_server.repositoriesList (5 handlers)
+[GIN-debug] POST   /user/user/addServer      --> web/web_server.userAddServer (4 handlers)
+[GIN-debug] POST   /user/user/removeServer   --> web/web_server.userRemoveServer (4 handlers)
+[GIN-debug] GET    /user/user/listAllServer  --> web/web_server.userListAllServer (4 handlers)
+[GIN-debug] POST   /user/login               --> web/web_server.userLogin (3 handlers)
+[GIN-debug] POST   /user/register            --> web/web_server.userRegister (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[26.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[54.113ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[53.908ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[26.334ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[53.510ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[52.509ms] [rows:-] SELECT * FROM `users` LIMIT 1
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[52.952ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'users' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[26.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[52.403ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[53.010ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[26.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[52.534ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[52.756ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'servers' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[26.176ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[53.718ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.302ms] [rows:-] SELECT * FROM `servers` LIMIT 1
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[53.890ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'servers' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[25.773ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:43 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[53.009ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:44 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[53.010ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'web' AND table_name = 'servers' AND constraint_name = 'fk_servers_user'
+
+2024/03/08 21:26:44 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[25.883ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:26:44 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[52.009ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:26:44 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[52.509ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'servers' AND index_name = 'idx_servers_deleted_at'
+[GIN-debug] GET    /containers               --> web/web_server.containersList (5 handlers)
+[GIN-debug] GET    /containers/all           --> web/web_server.containersListAll (5 handlers)
+[GIN-debug] POST   /container/create         --> web/web_server.containerCreate (5 handlers)
+[GIN-debug] POST   /container/start          --> web/web_server.containerStart (5 handlers)
+[GIN-debug] POST   /container/stop           --> web/web_server.containerStop (5 handlers)
+[GIN-debug] POST   /container/kill           --> web/web_server.containerKill (5 handlers)
+[GIN-debug] POST   /container/remove         --> web/web_server.containerRemove (5 handlers)
+[GIN-debug] POST   /container/search         --> web/web_server.containerSearch (5 handlers)
+[GIN-debug] GET    /images                   --> web/web_server.imageList (5 handlers)
+[GIN-debug] GET    /images/all               --> web/web_server.imageListAll (5 handlers)
+[GIN-debug] POST   /image/buildByFile        --> web/web_server.imageBuildByFile (5 handlers)
+[GIN-debug] POST   /image/tag/remove         --> web/web_server.imageTagRemove (5 handlers)
+[GIN-debug] POST   /image/removeByID         --> web/web_server.imageRemoveByID (5 handlers)
+[GIN-debug] POST   /image/tag/rename         --> web/web_server.imageTagRename (5 handlers)
+[GIN-debug] POST   /images/search/repository --> web/web_server.imagesSearchRepository (5 handlers)
+[GIN-debug] POST   /images/search/local      --> web/web_server.imagesSearchLocal (5 handlers)
+[GIN-debug] POST   /image/addTag             --> web/web_server.imageAddTag (5 handlers)
+[GIN-debug] POST   /images/export            --> web/web_server.imagesExport (5 handlers)
+[GIN-debug] POST   /images/load              --> web/web_server.imagesLoad (5 handlers)
+[GIN-debug] POST   /image/pull               --> web/web_server.imagePull (5 handlers)
+[GIN-debug] POST   /image/push               --> web/web_server.imagePush (5 handlers)
+[GIN-debug] POST   /repository/login         --> web/web_server.repositoryLogin (5 handlers)
+[GIN-debug] POST   /repository/logout        --> web/web_server.repositoryLogout (5 handlers)
+[GIN-debug] GET    /repositories/list        --> web/web_server.repositoriesList (5 handlers)
+[GIN-debug] POST   /user/user/addServer      --> web/web_server.userAddServer (4 handlers)
+[GIN-debug] POST   /user/user/removeServer   --> web/web_server.userRemoveServer (4 handlers)
+[GIN-debug] GET    /user/user/listAllServer  --> web/web_server.userListAllServer (4 handlers)
+[GIN-debug] POST   /user/login               --> web/web_server.userLogin (3 handlers)
+[GIN-debug] POST   /user/register            --> web/web_server.userRegister (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[28.005ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.257ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.764ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.865ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.155ms] [rows:-] SELECT * FROM `users` LIMIT 1
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.011ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'users' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.012ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.008ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.283ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.111ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[59.408ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'servers' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:30:01 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.848ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:30:02 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.010ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:30:02 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.510ms] [rows:-] SELECT * FROM `servers` LIMIT 1
+
+2024/03/08 21:30:02 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.510ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'servers' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:30:02 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:30:02 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[58.117ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:30:02 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.510ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'web' AND table_name = 'servers' AND constraint_name = 'fk_servers_user'
+
+2024/03/08 21:30:02 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.430ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:30:02 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.237ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:30:02 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[55.783ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'servers' AND index_name = 'idx_servers_deleted_at'
+[GIN-debug] GET    /containers               --> web/web_server.containersList (5 handlers)
+[GIN-debug] GET    /containers/all           --> web/web_server.containersListAll (5 handlers)
+[GIN-debug] POST   /container/create         --> web/web_server.containerCreate (5 handlers)
+[GIN-debug] POST   /container/start          --> web/web_server.containerStart (5 handlers)
+[GIN-debug] POST   /container/stop           --> web/web_server.containerStop (5 handlers)
+[GIN-debug] POST   /container/kill           --> web/web_server.containerKill (5 handlers)
+[GIN-debug] POST   /container/remove         --> web/web_server.containerRemove (5 handlers)
+[GIN-debug] POST   /container/search         --> web/web_server.containerSearch (5 handlers)
+[GIN-debug] GET    /images                   --> web/web_server.imageList (5 handlers)
+[GIN-debug] GET    /images/all               --> web/web_server.imageListAll (5 handlers)
+[GIN-debug] POST   /image/buildByFile        --> web/web_server.imageBuildByFile (5 handlers)
+[GIN-debug] POST   /image/tag/remove         --> web/web_server.imageTagRemove (5 handlers)
+[GIN-debug] POST   /image/removeByID         --> web/web_server.imageRemoveByID (5 handlers)
+[GIN-debug] POST   /image/tag/rename         --> web/web_server.imageTagRename (5 handlers)
+[GIN-debug] POST   /images/search/repository --> web/web_server.imagesSearchRepository (5 handlers)
+[GIN-debug] POST   /images/search/local      --> web/web_server.imagesSearchLocal (5 handlers)
+[GIN-debug] POST   /image/addTag             --> web/web_server.imageAddTag (5 handlers)
+[GIN-debug] POST   /images/export            --> web/web_server.imagesExport (5 handlers)
+[GIN-debug] POST   /images/load              --> web/web_server.imagesLoad (5 handlers)
+[GIN-debug] POST   /image/pull               --> web/web_server.imagePull (5 handlers)
+[GIN-debug] POST   /image/push               --> web/web_server.imagePush (5 handlers)
+[GIN-debug] POST   /repository/login         --> web/web_server.repositoryLogin (5 handlers)
+[GIN-debug] POST   /repository/logout        --> web/web_server.repositoryLogout (5 handlers)
+[GIN-debug] GET    /repositories/list        --> web/web_server.repositoriesList (5 handlers)
+[GIN-debug] POST   /user/user/addServer      --> web/web_server.userAddServer (4 handlers)
+[GIN-debug] POST   /user/user/removeServer   --> web/web_server.userRemoveServer (4 handlers)
+[GIN-debug] GET    /user/user/listAllServer  --> web/web_server.userListAllServer (4 handlers)
+[GIN-debug] POST   /user/login               --> web/web_server.userLogin (3 handlers)
+[GIN-debug] POST   /user/register            --> web/web_server.userRegister (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+
+2024/03/08 21:30:40 D:/project/goProject/ongoing_project/web/dao/db.go:18
+[58.083ms] [rows:1] SELECT * FROM `users` WHERE username = 'root' AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2024/03/08 21:31:04 D:/project/goProject/ongoing_project/web/dao/db.go:104
+[57.069ms] [rows:1] SELECT * FROM `users` WHERE username = 'root' AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2024/03/08 21:31:04 D:/project/goProject/ongoing_project/web/dao/db.go:107
+[57.871ms] [rows:2] SELECT * FROM `servers` WHERE user_id = 1 AND `servers`.`deleted_at` IS NULL
+[GIN] 2024/03/08 - 21:31:09 | 200 |    28.894666s |       127.0.0.1 | POST     "/user/login"
+[GIN] 2024/03/08 - 21:31:42 | 200 |   17.5736426s |       127.0.0.1 | GET      "/images?server=192.168.30.123:2376"
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[28.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.364ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.156ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[28.295ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.407ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.510ms] [rows:-] SELECT * FROM `users` LIMIT 1
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.510ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'users' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[27.910ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.485ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.510ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[28.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.204ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.759ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'servers' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[28.005ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.790ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:38:13 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.230ms] [rows:-] SELECT * FROM `servers` LIMIT 1
+
+2024/03/08 21:38:14 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.404ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'servers' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:38:14 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[28.006ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:38:14 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[57.722ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:38:14 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.269ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'web' AND table_name = 'servers' AND constraint_name = 'fk_servers_user'
+
+2024/03/08 21:38:14 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[29.505ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:38:14 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.937ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:38:14 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[56.510ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'servers' AND index_name = 'idx_servers_deleted_at'
+[GIN-debug] GET    /containers               --> web/web_server.containersList (5 handlers)
+[GIN-debug] GET    /containers/all           --> web/web_server.containersListAll (5 handlers)
+[GIN-debug] POST   /container/create         --> web/web_server.containerCreate (5 handlers)
+[GIN-debug] POST   /container/start          --> web/web_server.containerStart (5 handlers)
+[GIN-debug] POST   /container/stop           --> web/web_server.containerStop (5 handlers)
+[GIN-debug] POST   /container/kill           --> web/web_server.containerKill (5 handlers)
+[GIN-debug] POST   /container/remove         --> web/web_server.containerRemove (5 handlers)
+[GIN-debug] POST   /container/search         --> web/web_server.containerSearch (5 handlers)
+[GIN-debug] GET    /images                   --> web/web_server.imageList (5 handlers)
+[GIN-debug] GET    /images/all               --> web/web_server.imageListAll (5 handlers)
+[GIN-debug] POST   /image/buildByFile        --> web/web_server.imageBuildByFile (5 handlers)
+[GIN-debug] POST   /image/tag/remove         --> web/web_server.imageTagRemove (5 handlers)
+[GIN-debug] POST   /image/removeByID         --> web/web_server.imageRemoveByID (5 handlers)
+[GIN-debug] POST   /image/tag/rename         --> web/web_server.imageTagRename (5 handlers)
+[GIN-debug] POST   /images/search/repository --> web/web_server.imagesSearchRepository (5 handlers)
+[GIN-debug] POST   /images/search/local      --> web/web_server.imagesSearchLocal (5 handlers)
+[GIN-debug] POST   /image/addTag             --> web/web_server.imageAddTag (5 handlers)
+[GIN-debug] POST   /images/export            --> web/web_server.imagesExport (5 handlers)
+[GIN-debug] POST   /images/load              --> web/web_server.imagesLoad (5 handlers)
+[GIN-debug] POST   /image/pull               --> web/web_server.imagePull (5 handlers)
+[GIN-debug] POST   /image/push               --> web/web_server.imagePush (5 handlers)
+[GIN-debug] POST   /repository/login         --> web/web_server.repositoryLogin (5 handlers)
+[GIN-debug] POST   /repository/logout        --> web/web_server.repositoryLogout (5 handlers)
+[GIN-debug] GET    /repositories/list        --> web/web_server.repositoriesList (5 handlers)
+[GIN-debug] POST   /user/user/addServer      --> web/web_server.userAddServer (4 handlers)
+[GIN-debug] POST   /user/user/removeServer   --> web/web_server.userRemoveServer (4 handlers)
+[GIN-debug] GET    /user/user/listAllServer  --> web/web_server.userListAllServer (4 handlers)
+[GIN-debug] POST   /user/login               --> web/web_server.userLogin (3 handlers)
+[GIN-debug] POST   /user/register            --> web/web_server.userRegister (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+
+2024/03/08 21:40:29 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[32.506ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:40:29 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[63.010ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[301.554ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'users' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[33.006ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[64.357ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[64.511ms] [rows:-] SELECT * FROM `users` LIMIT 1
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[63.700ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'users' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[268.534ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[62.952ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[65.512ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'users' AND index_name = 'idx_users_deleted_at'
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[30.825ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:40:30 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[64.551ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[64.972ms] [rows:-] SELECT count(*) FROM information_schema.tables WHERE table_schema = 'web' AND table_name = 'servers' AND table_type = 'BASE TABLE'
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[31.498ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[66.901ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[64.866ms] [rows:-] SELECT * FROM `servers` LIMIT 1
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[65.010ms] [rows:-] SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'web' AND table_name = 'servers' ORDER BY ORDINAL_POSITION
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[32.006ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[63.284ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[62.013ms] [rows:-] SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'web' AND table_name = 'servers' AND constraint_name = 'fk_servers_user'
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[31.601ms] [rows:-] SELECT DATABASE()
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[63.491ms] [rows:1] SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'web%' ORDER BY SCHEMA_NAME='web' DESC,SCHEMA_NAME limit 1
+
+2024/03/08 21:40:31 D:/project/goProject/ongoing_project/web/dao/db.go:9
+[60.511ms] [rows:-] SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'web' AND table_name = 'servers' AND index_name = 'idx_servers_deleted_at'
+[GIN-debug] GET    /containers               --> web/web_server.containersList (5 handlers)
+[GIN-debug] GET    /containers/all           --> web/web_server.containersListAll (5 handlers)
+[GIN-debug] POST   /container/create         --> web/web_server.containerCreate (5 handlers)
+[GIN-debug] POST   /container/start          --> web/web_server.containerStart (5 handlers)
+[GIN-debug] POST   /container/stop           --> web/web_server.containerStop (5 handlers)
+[GIN-debug] POST   /container/kill           --> web/web_server.containerKill (5 handlers)
+[GIN-debug] POST   /container/remove         --> web/web_server.containerRemove (5 handlers)
+[GIN-debug] POST   /container/search         --> web/web_server.containerSearch (5 handlers)
+[GIN-debug] GET    /images                   --> web/web_server.imageList (5 handlers)
+[GIN-debug] GET    /images/all               --> web/web_server.imageListAll (5 handlers)
+[GIN-debug] POST   /image/buildByFile        --> web/web_server.imageBuildByFile (5 handlers)
+[GIN-debug] POST   /image/tag/remove         --> web/web_server.imageTagRemove (5 handlers)
+[GIN-debug] POST   /image/removeByID         --> web/web_server.imageRemoveByID (5 handlers)
+[GIN-debug] POST   /image/tag/rename         --> web/web_server.imageTagRename (5 handlers)
+[GIN-debug] POST   /images/search/repository --> web/web_server.imagesSearchRepository (5 handlers)
+[GIN-debug] POST   /images/search/local      --> web/web_server.imagesSearchLocal (5 handlers)
+[GIN-debug] POST   /image/addTag             --> web/web_server.imageAddTag (5 handlers)
+[GIN-debug] POST   /images/export            --> web/web_server.imagesExport (5 handlers)
+[GIN-debug] POST   /images/load              --> web/web_server.imagesLoad (5 handlers)
+[GIN-debug] POST   /image/pull               --> web/web_server.imagePull (5 handlers)
+[GIN-debug] POST   /image/push               --> web/web_server.imagePush (5 handlers)
+[GIN-debug] POST   /repository/login         --> web/web_server.repositoryLogin (5 handlers)
+[GIN-debug] POST   /repository/logout        --> web/web_server.repositoryLogout (5 handlers)
+[GIN-debug] GET    /repositories/list        --> web/web_server.repositoriesList (5 handlers)
+[GIN-debug] POST   /user/user/addServer      --> web/web_server.userAddServer (4 handlers)
+[GIN-debug] POST   /user/user/removeServer   --> web/web_server.userRemoveServer (4 handlers)
+[GIN-debug] GET    /user/user/listAllServer  --> web/web_server.userListAllServer (4 handlers)
+[GIN-debug] POST   /user/login               --> web/web_server.userLogin (3 handlers)
+[GIN-debug] POST   /user/register            --> web/web_server.userRegister (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :80
+[GIN] 2024/03/08 - 21:40:39 | 200 |    7.5900744s |       127.0.0.1 | GET      "/images?server=192.168.30.123:2376"
+[GIN] 2024/03/08 - 21:40:54 | 200 |    4.3022696s |       127.0.0.1 | GET      "/containers?server=192.168.30.123:2376"
