@@ -1,6 +1,7 @@
 package web_server
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"web/dao"
 	docker "web/docker_server"
@@ -63,4 +64,24 @@ func userRemoveServer(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "删除docker服务器信息成功",
 	})
+}
+func userListAllServer(c *gin.Context) {
+	username, _ := c.Get("username")
+	servers, err := dao.GetUserAllServers(username.(string))
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": "获取所有服务器信息失败",
+			"error":   err.Error(),
+		})
+		return
+	}
+	marshal, err := json.Marshal(servers)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": "将服务器信息转换为json格式失败",
+			"error":   err.Error(),
+		})
+		return
+	}
+	c.Data(200, "application/json", marshal)
 }

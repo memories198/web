@@ -38,6 +38,7 @@ func registerUrl() {
 
 		authorized.POST("/user/addServer", userAddServer)
 		authorized.POST("/user/removeServer", userRemoveServer)
+		authorized.GET("/user/listAllServer", userListAllServer)
 	}
 
 	router.POST("/user/login", userLogin)

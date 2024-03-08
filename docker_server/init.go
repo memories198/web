@@ -10,52 +10,48 @@ import (
 
 type Client docker.Client
 
+var (
+	mu sync.Mutex
+	wg sync.WaitGroup
+)
+
 func InitUserClient(servers []string) (clients map[string]*Client, errs []string) {
 	clients = map[string]*Client{}
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	var wg sync.WaitGroup
-	var mu sync.Mutex
 
 	for _, server := range servers {
 		wg.Add(1)
-		go func(ctx context.Context, se string) {
+		go func(server string) {
 			defer wg.Done()
-
-			select {
-			case <-ctx.Done():
-				mu.Lock()
-				defer mu.Unlock()
-				errs = append(errs, se+"的客户端初始化或连接超时")
-				return
-			case <-func() <-chan string {
-				c := make(chan string)
-
-				cli, err := docker.NewClient("http://" + se)
+			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+			defer cancel()
+			c := make(chan string)
+			go func() {
+				cli, err := docker.NewClient("http://" + server)
 				if err != nil {
-					mu.Lock()
-					defer mu.Unlock()
-					errs = append(errs, se+"的客户端初始化失败:"+err.Error())
-					close(c)
-					return c
+					c <- server + "的客户端初始化失败:" + err.Error()
+					return
 				}
 				err = cli.Ping()
 				if err != nil {
-					mu.Lock()
-					defer mu.Unlock()
-					errs = append(errs, se+"无法连接:"+err.Error())
-					close(c)
-					return c
+					c <- server + "无法连接:" + err.Error()
+					return
 				}
-				mu.Lock()
-				defer mu.Unlock()
-				clients[se] = (*Client)(cli)
-				close(c)
-				return c
-			}():
-			}
+				clients[server] = (*Client)(cli)
 
-		}(ctx, server)
+				c <- ""
+			}()
+			select {
+			case <-ctx.Done():
+				errs = append(errs, server+"的客户端初始化失败或连接超时")
+				return
+
+			case message := <-c:
+				if message != "" {
+					errs = append(errs, message)
+				}
+				return
+			}
+		}(server)
 	}
 	wg.Wait()
 	return

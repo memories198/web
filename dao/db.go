@@ -81,7 +81,24 @@ func RemoveServer(username, ipAndPort string) error {
 	}
 	return nil
 }
+func GetUserAllServers(username string) (serversAddress []string, err error) {
+	var u User
+	err = db.Model(&User{}).Where("username = ?", username).First(&u).Error
+	if err != nil {
+		return
+	}
 
+	var servers []Server
+	err = db.Model(&Server{}).Where("user_id = ?", u.ID).Find(&servers).Error
+	if err != nil {
+		return
+	}
+
+	for _, server := range servers {
+		serversAddress = append(serversAddress, server.ServerAddress)
+	}
+	return
+}
 func GetUserServers(username string) []string {
 	var u User
 	db.Model(&User{}).Where("username = ?", username).First(&u)

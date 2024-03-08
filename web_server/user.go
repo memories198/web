@@ -46,9 +46,16 @@ func userLogin(c *gin.Context) {
 	var errs []string
 	userClients[username], errs = docker.InitUserClient(dao.GetUserServers(username))
 
+	if errs == nil {
+		c.JSON(200, gin.H{
+			"message": "登录成功",
+		})
+		return
+	}
 	marshal, err := json.Marshal(struct {
-		Err []string `json:"errors"`
-	}{errs})
+		Err     []string `json:"errors"`
+		Message string   `json:"message"`
+	}{errs, "登录成功"})
 	if err != nil {
 		c.JSON(400, gin.H{
 			"message": "将errs转换为json格式失败",
