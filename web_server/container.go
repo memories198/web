@@ -25,7 +25,7 @@ func containersList(c *gin.Context) {
 	username, _ := c.Get("username")
 	server := c.Query("server")
 
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -65,7 +65,7 @@ func containersListAll(c *gin.Context) {
 	username, _ := c.Get("username")
 	server := c.Query("server")
 
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -111,9 +111,8 @@ func containerCreate(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
 
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -121,7 +120,7 @@ func containerCreate(c *gin.Context) {
 		return
 	}
 
-	ID, err := docker.CreateContainer(body, userClients[username.(string)][server])
+	ID, err := docker.CreateContainer(body, userClients[username.(string)])
 
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -147,8 +146,7 @@ func containerStart(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -156,7 +154,7 @@ func containerStart(c *gin.Context) {
 		return
 	}
 
-	err = docker.StartContainer(IDOrName, userClients[username.(string)][server])
+	err = docker.StartContainer(IDOrName, userClients[username.(string)])
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message":           "启动容器失败",
@@ -181,8 +179,7 @@ func containerStop(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -190,7 +187,7 @@ func containerStop(c *gin.Context) {
 		return
 	}
 
-	err = docker.StopContainer(IDOrName, userClients[username.(string)][server])
+	err = docker.StopContainer(IDOrName, userClients[username.(string)])
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message":           "容器暂停失败",
@@ -215,8 +212,7 @@ func containerKill(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -224,7 +220,7 @@ func containerKill(c *gin.Context) {
 		return
 	}
 
-	err = docker.KillContainer(IDOrName, userClients[username.(string)][server])
+	err = docker.KillContainer(IDOrName, userClients[username.(string)])
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message":           "容器强制暂停失败",
@@ -249,8 +245,7 @@ func containerRemove(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -258,7 +253,7 @@ func containerRemove(c *gin.Context) {
 		return
 	}
 
-	err = docker.RemoveContainer(IDOrName, userClients[username.(string)][server])
+	err = docker.RemoveContainer(IDOrName, userClients[username.(string)])
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":             err.Error(),
@@ -285,7 +280,7 @@ func containerSearch(c *gin.Context) {
 	}
 	username, _ := c.Get("username")
 	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",

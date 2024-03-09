@@ -6,7 +6,7 @@ import (
 )
 
 func migration() error {
-	err := db.AutoMigrate(User{}, Server{})
+	err := db.AutoMigrate(User{}, Server{}, Repository{})
 	if err != nil {
 		return err
 	}
@@ -111,4 +111,9 @@ func GetUserServers(username string) []string {
 		serversNames = append(serversNames, server.ServerAddress)
 	}
 	return serversNames
+}
+
+func AddRepository(username, repoUsername, repoPassword string) error {
+	//db.Model(&Repository{}).Where()
+	return nil
 }

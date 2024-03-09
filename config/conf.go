@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"gopkg.in/yaml.v3"
 	"os"
 )
@@ -10,7 +9,7 @@ var (
 	MysqlConfig      = &Mysql{}
 	RedisConfig      = &Redis{}
 	LogFile          *os.File
-	CookieExpireTime int
+	CookieExpireTime = 3600000
 )
 
 type Mysql struct {
@@ -20,7 +19,7 @@ type Mysql struct {
 	Database string `yaml:"database"`
 }
 type Redis struct {
-	Password string `yaml:"password"`
+	Password string `yaml:"password" `
 	Host     string `yaml:"host"`
 	Database int    `yaml:"database"`
 	Timeout  int    `yaml:"timeout"`
@@ -52,6 +51,5 @@ func Init() error {
 		return err
 	}
 
-	fmt.Println(CookieExpireTime)
 	return nil
 }

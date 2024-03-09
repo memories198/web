@@ -72,7 +72,7 @@ func bytesToMB(size int64) string {
 }
 
 func containers(all bool, username, server string) ([]*Container, error) {
-	containers, err := docker.GetAllContainer(all, userClients[username][server])
+	containers, err := docker.GetAllContainer(all, userClients[username])
 	if err != nil {
 		return nil, err
 	}
@@ -82,8 +82,8 @@ func containers(all bool, username, server string) ([]*Container, error) {
 	for _, container := range containers {
 		containerInfo := &Container{
 			Name:        container.Names[0][1:], // 容器至少有一个名字 name:/nginx,[1:0]表示去掉/
-			CpuUsage:    docker.GetCpuUsage(&container, userClients[username][server]),
-			MemoryUsage: docker.GetMemoryUsage(&container, userClients[username][server]),
+			CpuUsage:    docker.GetCpuUsage(&container, userClients[username]),
+			MemoryUsage: docker.GetMemoryUsage(&container, userClients[username]),
 			Image:       container.Image,
 			ID:          container.ID,
 			Status:      container.Status,
@@ -97,7 +97,7 @@ func containers(all bool, username, server string) ([]*Container, error) {
 	return containersInfo, nil
 }
 func images(all bool, username, server string) ([]Image, error) {
-	images, err := docker.GetImages(all, userClients[username][server])
+	images, err := docker.GetImages(all, userClients[username])
 	if err != nil {
 		return nil, err
 	}

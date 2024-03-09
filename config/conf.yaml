@@ -1,4 +1,4 @@
-timeout: 3
+#时间单位：ms
 mysql:
   user: root
   password: o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG
@@ -10,5 +10,5 @@ redis:
   host: 1.94.9.77:1764
   database: 0
   timeout: 5000
-webLog: ./logs/web.log
+webLog: logs/web.log
 cookieExpireTime: 3600000

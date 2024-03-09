@@ -5,7 +5,10 @@ import (
 	docker "github.com/fsouza/go-dockerclient"
 )
 
+// 声明一个空的仓库代表公有仓库
 var authConfiguration = []docker.AuthConfiguration{{}}
+
+type AuthConfiguration *docker.AuthConfiguration
 
 func ListRepositories() (repositories []string) {
 	for _, configuration := range authConfiguration {
@@ -14,27 +17,28 @@ func ListRepositories() (repositories []string) {
 	return repositories
 }
 
-func LoginRepository(username, password, serverAddress string, cli *Client) error {
+func LoginRepository(repositoryUsername, repositoryPassword, repository string, cli *Client) error {
 	client := docker.Client(*cli)
 	for _, configuration := range authConfiguration {
-		if username == configuration.Username && password == configuration.Password && serverAddress == configuration.ServerAddress {
+		if repositoryUsername == configuration.Username &&
+			repository == configuration.ServerAddress {
 			return errors.New("已登录该镜像仓库,无法重复登录")
 		}
 	}
 
 	_, err := client.AuthCheck(&docker.AuthConfiguration{
-		Username:      username,
-		Password:      password,
-		ServerAddress: serverAddress,
+		Username:      repositoryUsername,
+		Password:      repositoryPassword,
+		ServerAddress: repository,
 	})
 	if err != nil {
 		return err
 	}
 
 	authConfiguration = append(authConfiguration, docker.AuthConfiguration{
-		Username:      username,
-		Password:      password,
-		ServerAddress: serverAddress,
+		Username:      repositoryUsername,
+		Password:      repositoryPassword,
+		ServerAddress: repository,
 	})
 	return nil
 }

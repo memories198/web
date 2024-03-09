@@ -24,7 +24,7 @@ func Start() error {
 	router = r
 	router.MaxMultipartMemory = 1 << 30
 	registerUrl()
-	err = router.Run(":80")
+	err = router.RunTLS(":443", "web_server/server.crt", "web_server/server.key")
 	if err != nil {
 		return err
 	}

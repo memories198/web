@@ -7,6 +7,7 @@ import (
 )
 
 func registerUrl() {
+
 	authorized := router.Group("/")
 	authorized.Use(AuthMiddleware(), PingServer())
 	{
@@ -42,9 +43,9 @@ func registerUrl() {
 	user := router.Group("/user")
 	user.Use(AuthMiddleware())
 	{
-		user.POST("/user/addServer", userAddServer)
-		user.POST("/user/removeServer", userRemoveServer)
-		user.GET("/user/listAllServer", userListAllServer)
+		user.POST("/addServer", userAddServer)
+		user.POST("/removeServer", userRemoveServer)
+		user.GET("/listAllServer", userListAllServer)
 	}
 	router.POST("/user/login", userLogin)
 	router.POST("/user/register", userRegister)
@@ -118,8 +119,8 @@ func PingServer() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		userClients = map[string]map[string]*docker.Client{username.(string): {}}
-		userClients[username.(string)][server] = cli
+		userClients = map[string]*docker.Client{}
+		userClients[username.(string)] = cli
 		c.Next()
 	}
 }

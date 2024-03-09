@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"web/dao"
 	docker "web/docker_server"
 )
+
+var userAuthConfigurations = map[string][]docker.AuthConfiguration{}
 
 func repositoriesList(c *gin.Context) {
 	repositories := docker.ListRepositories()
@@ -28,7 +31,7 @@ func repositoriesList(c *gin.Context) {
 
 func repositoryLogin(c *gin.Context) {
 	data := getJsonParam(c)
-	repositoryUsername, err := data("username")
+	repositoryUsername, err := data("repositoryUsername")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
@@ -36,7 +39,7 @@ func repositoryLogin(c *gin.Context) {
 		})
 		return
 	}
-	repositoryPassword, err := data("password")
+	repositoryPassword, err := data("repositoryPassword")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
@@ -44,7 +47,7 @@ func repositoryLogin(c *gin.Context) {
 		})
 		return
 	}
-	serverAddress, err := data("serverAddress")
+	repository, err := data("repository")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
@@ -52,9 +55,9 @@ func repositoryLogin(c *gin.Context) {
 		})
 		return
 	}
+
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -62,12 +65,18 @@ func repositoryLogin(c *gin.Context) {
 		return
 	}
 
-	err = docker.LoginRepository(repositoryUsername, repositoryPassword, serverAddress, userClients[username.(string)][server])
+	err = docker.LoginRepository(repositoryUsername, repositoryPassword, repository, userClients[username.(string)])
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
 			"message": "镜像仓库登录失败",
 		})
+		return
+	}
+
+	err = dao.AddRepository(username.(string), repositoryUsername, repositoryPassword)
+	if err != nil {
+
 		return
 	}
 	c.JSON(200, gin.H{

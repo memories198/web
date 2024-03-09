@@ -1,13 +1,12 @@
 package web_server
 
 import (
-	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"web/dao"
 	docker "web/docker_server"
 )
 
-var userClients map[string]map[string]*docker.Client
+var userClients map[string]*docker.Client
 
 func userLogin(c *gin.Context) {
 	data := getJsonParam(c)
@@ -42,28 +41,30 @@ func userLogin(c *gin.Context) {
 			return
 		}
 	}
-
-	var errs []string
-	userClients[username], errs = docker.InitUserClient(dao.GetUserServers(username))
-
-	if errs == nil {
-		c.JSON(200, gin.H{
-			"message": "登录成功",
-		})
-		return
-	}
-	marshal, err := json.Marshal(struct {
-		Err     []string `json:"errors"`
-		Message string   `json:"message"`
-	}{errs, "登录成功"})
-	if err != nil {
-		c.JSON(400, gin.H{
-			"message": "将errs转换为json格式失败",
-			"error":   err.Error(),
-		})
-		return
-	}
-	c.Data(200, "application/json", marshal)
+	c.JSON(200, gin.H{
+		"message": "登录成功",
+	})
+	//var errs []string
+	//userClients[username], errs = docker.InitUserClient(dao.GetUserServers(username))
+	//
+	//if errs == nil {
+	//	c.JSON(200, gin.H{
+	//		"message": "登录成功",
+	//	})
+	//	return
+	//}
+	//marshal, err := json.Marshal(struct {
+	//	Err     []string `json:"errors"`
+	//	Message string   `json:"message"`
+	//}{errs, "登录成功"})
+	//if err != nil {
+	//	c.JSON(400, gin.H{
+	//		"message": "将errs转换为json格式失败",
+	//		"error":   err.Error(),
+	//	})
+	//	return
+	//}
+	//c.Data(200, "application/json", marshal)
 }
 
 func userRegister(c *gin.Context) {

@@ -76,4 +76,8 @@
     解决方法：将return *Client(cli)修改为return (*Client)(cli)
     问题：直接用cookie登录是用户的clients字典没有初始化，导致pingServer时使用userClients[username.(string)][server] = cli会访问空地址。因为用户的clients字典只有在登录时才会初始化
     解决方法：在pingServer中添加初始化用户的clients字典的功能
+    优化：将userClients 改为map[string]*docker.Client，这样可以实现自动切换client的功能，没必要在用户登录时把用户所有的docker服务器全部测试一遍连接，用户使用哪个docker服务器就初始化该服务器的连接。
+    构想：还没有保存用户登录私有仓库的信息的功能；没有在redis缓存docker服务器信息的功能
+    进度：dao.AddRepository还未完成开发
+    发现：私有镜像仓库的登录是公用的，不是属于用户个人的
 

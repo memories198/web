@@ -43,7 +43,7 @@ func imageList(c *gin.Context) {
 func imageListAll(c *gin.Context) {
 	username, _ := c.Get("username")
 	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -113,8 +113,7 @@ func imageBuildByFile(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -123,7 +122,7 @@ func imageBuildByFile(c *gin.Context) {
 	}
 
 	// 使用tar文件构建Docker镜像
-	imageID, err := docker.BuildImage(saveFilePath, imageName, userClients[username.(string)][server])
+	imageID, err := docker.BuildImage(saveFilePath, imageName, userClients[username.(string)])
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error":   err.Error(),
@@ -150,8 +149,7 @@ func imageTagRemove(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -159,7 +157,7 @@ func imageTagRemove(c *gin.Context) {
 		return
 	}
 
-	err = docker.RemoveImage(imageName, userClients[username.(string)][server])
+	err = docker.RemoveImage(imageName, userClients[username.(string)])
 	if err != nil {
 		c.JSON(400, gin.H{
 			"message": "镜像删除失败",
@@ -185,7 +183,7 @@ func imageRemoveByID(c *gin.Context) {
 	}
 	username, _ := c.Get("username")
 	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -196,7 +194,7 @@ func imageRemoveByID(c *gin.Context) {
 	allImages, err := images(false, username.(string), server)
 	for _, image := range allImages {
 		if image.ID == imageID {
-			err = docker.RemoveImage(imageID, userClients[username.(string)][server])
+			err = docker.RemoveImage(imageID, userClients[username.(string)])
 			if err != nil {
 				c.JSON(400, gin.H{
 					"message": "镜像删除失败",
@@ -238,8 +236,7 @@ func imageTagRename(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -247,7 +244,7 @@ func imageTagRename(c *gin.Context) {
 		return
 	}
 
-	err = docker.RenameImage(imageTag, newTag, userClients[username.(string)][server])
+	err = docker.RenameImage(imageTag, newTag, userClients[username.(string)])
 	if err != nil {
 		c.JSON(400, gin.H{
 			"message": "镜像重命名出错",
@@ -275,8 +272,7 @@ func imagesSearchRepository(c *gin.Context) {
 
 	var imagesInfo []*docker.ImageInfo
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -284,7 +280,7 @@ func imagesSearchRepository(c *gin.Context) {
 		return
 	}
 
-	imagesInfo, err = docker.SearchImagesRepository(data["name"], userClients[username.(string)][server])
+	imagesInfo, err = docker.SearchImagesRepository(data["name"], userClients[username.(string)])
 	if err != nil {
 		c.JSON(400, gin.H{
 			"message": "查找镜像失败",
@@ -320,7 +316,7 @@ func imagesSearchLocal(c *gin.Context) {
 	}
 	username, _ := c.Get("username")
 	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -385,8 +381,7 @@ func imageAddTag(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -394,7 +389,7 @@ func imageAddTag(c *gin.Context) {
 		return
 	}
 
-	imageID, err := docker.AddImageTag(imageName, newTag, userClients[username.(string)][server])
+	imageID, err := docker.AddImageTag(imageName, newTag, userClients[username.(string)])
 	if err != nil {
 		c.JSON(400, gin.H{
 			"message": "容器标签添加失败",
@@ -463,8 +458,7 @@ func imagesExport(c *gin.Context) {
 	c.Header("Content-Type", "application/octet-stream")
 
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -472,7 +466,7 @@ func imagesExport(c *gin.Context) {
 		return
 	}
 
-	err = docker.ExportImages(c.Writer, images, userClients[username.(string)][server])
+	err = docker.ExportImages(c.Writer, images, userClients[username.(string)])
 	if err != nil {
 		log.Println(err)
 	}
@@ -507,8 +501,7 @@ func imagesLoad(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -516,7 +509,7 @@ func imagesLoad(c *gin.Context) {
 		return
 	}
 
-	err = docker.LoadImages(saveFilePath, userClients[username.(string)][server])
+	err = docker.LoadImages(saveFilePath, userClients[username.(string)])
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
@@ -539,8 +532,7 @@ func imagePull(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -548,7 +540,7 @@ func imagePull(c *gin.Context) {
 		return
 	}
 
-	err = docker.PullImage(image, userClients[username.(string)][server])
+	err = docker.PullImage(image, userClients[username.(string)])
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
@@ -572,8 +564,7 @@ func imagePush(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-	server := c.Query("server")
-	_, exist := userClients[username.(string)][server]
+	_, exist := userClients[username.(string)]
 	if exist == false {
 		c.JSON(400, gin.H{
 			"message": "docker服务器地址错误",
@@ -581,7 +572,7 @@ func imagePush(c *gin.Context) {
 		return
 	}
 
-	err = docker.PushImage(image, userClients[username.(string)][server])
+	err = docker.PushImage(image, userClients[username.(string)])
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),

@@ -34,7 +34,7 @@ func userAddServer(c *gin.Context) {
 		})
 		return
 	}
-	userClients[username.(string)][ipAndPort] = cli
+	userClients[username.(string)] = cli
 
 	c.JSON(200, gin.H{
 		"message": "保存docker服务器信息成功",
@@ -60,7 +60,7 @@ func userRemoveServer(c *gin.Context) {
 		})
 		return
 	}
-	delete(userClients[username.(string)], ipAndPort)
+	userClients[username.(string)] = nil
 	c.JSON(200, gin.H{
 		"message": "删除docker服务器信息成功",
 	})
@@ -74,7 +74,13 @@ func userListAllServer(c *gin.Context) {
 			"error":   err.Error(),
 		})
 		return
+	} else if servers == nil {
+		c.JSON(200, gin.H{
+			"message": "还没有服务器",
+		})
+		return
 	}
+
 	marshal, err := json.Marshal(servers)
 	if err != nil {
 		c.JSON(400, gin.H{
