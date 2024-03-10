@@ -134,39 +134,35 @@ func LoadImages(filePath string, cli *Client) error {
 	return nil
 }
 
-func PullImage(image string, cli *Client) error {
+func PullImage(image string, cli *Client, configuration AuthConfiguration) error {
 	client := docker.Client(*cli)
 	if n := strings.Split(image, ":"); len(n) == 1 {
 		image = image + ":latest"
 	}
 
-	for _, configuration := range authConfiguration {
-		err := client.PullImage(docker.PullImageOptions{
-			Repository: image,
-		}, configuration)
-		if err == nil {
-			return nil
-		}
-	}
+	err := client.PullImage(docker.PullImageOptions{
+		Repository: image,
+	}, docker.AuthConfiguration(configuration))
+	if err != nil {
+		return errors.New("拉取镜像失败，没有登录私有镜像或镜像名称错误")
 
-	return errors.New("拉取镜像失败，没有登录私有镜像或镜像名称错误")
+	}
+	return nil
 }
 
-func PushImage(image string, cli *Client) error {
+func PushImage(image string, cli *Client, configuration AuthConfiguration) error {
 	client := docker.Client(*cli)
 	_, err := client.InspectImage(image)
 	if err != nil {
 		return err
 	}
 
-	for _, configuration := range authConfiguration {
-		err = client.PushImage(docker.PushImageOptions{
-			Name: image,
-		}, configuration)
-		if err == nil {
-			return nil
-		}
+	err = client.PushImage(docker.PushImageOptions{
+		Name: image,
+	}, docker.AuthConfiguration(configuration))
+	if err != nil {
+		return errors.New("未登录到镜像仓库或镜像名称未修改成标准格式")
 	}
 
-	return errors.New("未登录到镜像仓库或镜像名称未修改成标准格式")
+	return nil
 }

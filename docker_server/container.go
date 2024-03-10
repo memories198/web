@@ -1,37 +1,11 @@
 package docker_server
 
 import (
-	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	docker "github.com/fsouza/go-dockerclient"
 	"strings"
-	"time"
 )
-
-func PingServer(server string) (*Client, error) {
-	cli, err := docker.NewClient(server)
-	if err != nil {
-		return nil, err
-	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	c := make(chan string)
-	go func() {
-		err = cli.Ping()
-		if err == nil {
-			c <- ""
-		}
-	}()
-	select {
-	case <-ctx.Done():
-		return nil, errors.New("连接docker服务器超时")
-	case <-c:
-	}
-	return (*Client)(cli), err
-}
 
 func GetAllContainer(all bool, cli *Client) ([]docker.APIContainers, error) {
 	client := docker.Client(*cli)
@@ -42,32 +16,24 @@ func GetAllContainer(all bool, cli *Client) ([]docker.APIContainers, error) {
 	}
 	return containers, nil
 }
-func CreateContainer(configBytes []byte, cli *Client) (ID string, err error) {
+
+type CreateContainerOptions docker.CreateContainerOptions
+
+func CreateContainer(createContainerOptions CreateContainerOptions, cli *Client, configuration AuthConfiguration) (ID string, err error) {
 	client := docker.Client(*cli)
-	var config docker.CreateContainerOptions
-	err = json.Unmarshal(configBytes, &config)
-	if err != nil {
-		return "", err
-	}
+	var config = docker.CreateContainerOptions(createContainerOptions)
 
 	image := config.Config.Image
 	if n := strings.Split(image, ":"); len(n) == 1 {
 		image = image + ":latest"
 	}
 	exist := SearchImagesLocal(image, cli)
-	pullOK := false
 	if exist == false {
-		for _, configuration := range authConfiguration {
-			err := client.PullImage(docker.PullImageOptions{
-				Repository: image,
-			}, configuration)
-			if err == nil {
-				pullOK = true
-				break
-			}
-		}
+		err = client.PullImage(docker.PullImageOptions{
+			Repository: image,
+		}, docker.AuthConfiguration(configuration))
 	}
-	if exist == false && !pullOK {
+	if err != nil {
 		return "", errors.New("拉取镜像失败")
 	}
 

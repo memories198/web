@@ -18,6 +18,16 @@ func userAddServer(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
+
+	_, err = docker.PingServer(ipAndPort)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"message": "连接至docker服务器失败",
+			"error":   err.Error(),
+		})
+		return
+	}
+
 	err = dao.AddServer(username.(string), ipAndPort)
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -26,15 +36,6 @@ func userAddServer(c *gin.Context) {
 		})
 		return
 	}
-	cli, err := docker.AddServerClient(ipAndPort)
-	if err != nil {
-		c.JSON(400, gin.H{
-			"message": "添加服务器至userClients失败",
-			"error":   err.Error(),
-		})
-		return
-	}
-	userClients[username.(string)] = cli
 
 	c.JSON(200, gin.H{
 		"message": "保存docker服务器信息成功",

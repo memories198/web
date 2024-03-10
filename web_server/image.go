@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"web/dao"
 	docker "web/docker_server"
 )
 
@@ -540,17 +541,53 @@ func imagePull(c *gin.Context) {
 		return
 	}
 
-	err = docker.PullImage(image, userClients[username.(string)])
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   err.Error(),
-			"message": "拉取镜像失败",
+	//判断使用那个身份登录仓库
+	imageSlice := strings.Split(image, "/")
+	if len(imageSlice) > 1 {
+		var repositories []dao.Repository
+		repositories, err = dao.GetRepository(username.(string), imageSlice[0])
+		if err != nil {
+			c.JSON(400, gin.H{
+				"message": "没登录到镜像仓库",
+				"error":   err.Error(),
+			})
+			return
+		}
+		for _, repo := range repositories {
+			userRepositories[username.(string)] = docker.AuthConfiguration{
+				Username:      repo.RepoUsername,
+				Password:      repo.RepoPassword,
+				ServerAddress: repo.ServerAddress,
+			}
+			err = docker.PullImage(image, userClients[username.(string)], userRepositories[username.(string)])
+			if err == nil {
+				c.JSON(200, gin.H{
+					"message": "拉取镜像成功",
+				})
+				return
+			}
+		}
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error":   "未登录到镜像仓库",
+				"message": "拉取镜像失败",
+			})
+			return
+		}
+	} else {
+		userRepositories[username.(string)] = docker.AuthConfiguration{}
+		err = docker.PullImage(image, userClients[username.(string)], userRepositories[username.(string)])
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error":   err.Error(),
+				"message": "拉取镜像失败",
+			})
+			return
+		}
+		c.JSON(200, gin.H{
+			"message": "拉取镜像成功",
 		})
-		return
 	}
-	c.JSON(200, gin.H{
-		"message": "拉取镜像成功",
-	})
 }
 
 func imagePush(c *gin.Context) {
@@ -572,15 +609,51 @@ func imagePush(c *gin.Context) {
 		return
 	}
 
-	err = docker.PushImage(image, userClients[username.(string)])
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   err.Error(),
-			"message": "镜像推送失败",
+	//判断使用那个身份登录仓库
+	imageSlice := strings.Split(image, "/")
+	if len(imageSlice) > 1 {
+		var repositories []dao.Repository
+		repositories, err = dao.GetRepository(username.(string), imageSlice[0])
+		if err != nil {
+			c.JSON(400, gin.H{
+				"message": "没登录到镜像仓库",
+				"error":   err.Error(),
+			})
+			return
+		}
+		for _, repo := range repositories {
+			userRepositories[username.(string)] = docker.AuthConfiguration{
+				Username:      repo.RepoUsername,
+				Password:      repo.RepoPassword,
+				ServerAddress: repo.ServerAddress,
+			}
+			err = docker.PushImage(image, userClients[username.(string)], userRepositories[username.(string)])
+			if err == nil {
+				c.JSON(200, gin.H{
+					"message": "镜像推送成功",
+				})
+				return
+			}
+		}
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error":   err.Error(),
+				"message": "镜像推送失败",
+			})
+			return
+		}
+	} else {
+		userRepositories[username.(string)] = docker.AuthConfiguration{}
+		err = docker.PushImage(image, userClients[username.(string)], userRepositories[username.(string)])
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error":   err.Error(),
+				"message": "镜像推送失败",
+			})
+			return
+		}
+		c.JSON(200, gin.H{
+			"message": "镜像推送成功",
 		})
-		return
 	}
-	c.JSON(200, gin.H{
-		"message": "镜像推送成功",
-	})
 }

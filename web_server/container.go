@@ -6,6 +6,8 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strings"
+	"web/dao"
 	docker "web/docker_server"
 )
 
@@ -83,7 +85,7 @@ func containersListAll(c *gin.Context) {
 
 	if allContainers == nil {
 		c.JSON(200, gin.H{
-			"message": "没有容器正在运行",
+			"message": "没有任何容器",
 		})
 		return
 	}
@@ -111,28 +113,64 @@ func containerCreate(c *gin.Context) {
 		return
 	}
 	username, _ := c.Get("username")
-
-	_, exist := userClients[username.(string)]
-	if exist == false {
-		c.JSON(400, gin.H{
-			"message": "docker服务器地址错误",
-		})
-		return
-	}
-
-	ID, err := docker.CreateContainer(body, userClients[username.(string)])
-
+	var config docker.CreateContainerOptions
+	err = json.Unmarshal(body, &config)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"message": "容器创建失败",
+			"message": "json解析失败",
 			"error":   err.Error(),
 		})
 		return
 	}
-	c.JSON(200, gin.H{
-		"message":     "容器创建成功",
-		"containerID": ID,
-	})
+
+	//判断使用那个身份登录仓库
+	imageSlice := strings.Split(config.Config.Image, "/")
+	if len(imageSlice) > 1 {
+		var repositories []dao.Repository
+		repositories, err = dao.GetRepository(username.(string), imageSlice[0])
+		if err != nil {
+			c.JSON(400, gin.H{
+				"message": "没登陆到镜像仓库",
+				"error":   err.Error(),
+			})
+			return
+		}
+		for _, repo := range repositories {
+			userRepositories[username.(string)] = docker.AuthConfiguration{
+				Username:      repo.RepoUsername,
+				Password:      repo.RepoPassword,
+				ServerAddress: repo.ServerAddress,
+			}
+			ID, err := docker.CreateContainer(config, userClients[username.(string)], userRepositories[username.(string)])
+			if err == nil {
+				c.JSON(200, gin.H{
+					"message":     "容器创建成功",
+					"containerID": ID,
+				})
+				return
+			}
+		}
+		c.JSON(400, gin.H{
+			"message": "容器创建失败",
+			"error":   "为登录到镜像仓库，无法拉取镜像",
+		})
+		return
+	} else {
+		userRepositories[username.(string)] = docker.AuthConfiguration{}
+		ID, err := docker.CreateContainer(config, userClients[username.(string)], userRepositories[username.(string)])
+
+		if err != nil {
+			c.JSON(400, gin.H{
+				"message": "容器创建失败",
+				"error":   err.Error(),
+			})
+			return
+		}
+		c.JSON(200, gin.H{
+			"message":     "容器创建成功",
+			"containerID": ID,
+		})
+	}
 }
 
 func containerStart(c *gin.Context) {

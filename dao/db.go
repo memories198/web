@@ -113,7 +113,85 @@ func GetUserServers(username string) []string {
 	return serversNames
 }
 
-func AddRepository(username, repoUsername, repoPassword string) error {
-	//db.Model(&Repository{}).Where()
+func AddRepository(username, repoUsername, repoPassword, repository string) error {
+	var user User
+	err := db.Model(&User{}).Where("username = ?", username).First(&user).Error
+	if err != nil {
+		return err
+	}
+
+	var repo Repository
+	err = db.Model(&Repository{}).Unscoped().Where("user_id = ? and repo_username = ? and server_address = ? ",
+		user.ID, repoUsername, repository).First(&repo).Error
+	if err == nil {
+		//如果存在已经被软删除的相同行，将它的deleted_at设为nil就可以恢复出来，从而完成添加仓库信息
+		if repo.DeletedAt.Valid == true {
+			db.Model(&Repository{}).Unscoped().Where("user_id = ? and repo_username = ? and server_address = ? ",
+				user.ID, repoUsername, repository).Update("deleted_at", nil)
+		} else {
+			return errors.New("已添加该仓库")
+		}
+		return nil
+	}
+
+	err = db.Model(&Repository{}).Create(&Repository{
+		RepoUsername:  repoUsername,
+		RepoPassword:  repoPassword,
+		UserID:        strconv.Itoa(int(user.ID)),
+		ServerAddress: repository,
+	}).Error
+	if err != nil {
+		return errors.New("将仓库信息保存至数据库失败：" + err.Error())
+	}
 	return nil
+}
+func RemoveRepository(username, repoUsername, repository string) error {
+	var user User
+	err := db.Model(&User{}).Where("username = ?", username).First(&user).Error
+	if err != nil {
+		return err
+	}
+
+	err = db.Model(&Repository{}).Where("user_id = ? and repo_username = ? and server_address = ? ",
+		user.ID, repoUsername, repository).First(nil).Error
+	if err != nil {
+		return errors.New("该仓库不存在：" + err.Error())
+	}
+
+	err = db.Model(&Repository{}).Where("user_id = ? and repo_username = ? and server_address = ?",
+		user.ID, repoUsername, repository).Delete(nil).Error
+	if err != nil {
+		return errors.New("从数据库删除仓库信息失败：" + err.Error())
+	}
+	return nil
+}
+func GetRepository(username, repository string) ([]Repository, error) {
+	var user User
+	err := db.Model(&User{}).Where("username = ?", username).First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+
+	var repo []Repository
+	err = db.Model(&Repository{}).Where("user_id = ? and server_address = ?",
+		user.ID, repository).First(&repo).Error
+	if err != nil {
+		return nil, err
+	}
+	return repo, nil
+}
+func GetAllRepositories(username string) ([]*Repository, error) {
+	var user User
+	err := db.Model(&User{}).Where("username = ?", username).First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+
+	var repo []*Repository
+	err = db.Model(&Repository{}).Where("user_id = ?",
+		user.ID).Find(&repo).Error
+	if err != nil {
+		return nil, err
+	}
+	return repo, nil
 }

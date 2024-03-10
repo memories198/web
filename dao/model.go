@@ -16,8 +16,9 @@ type Server struct {
 }
 type Repository struct {
 	gorm.Model
-	RepoUsername string `gorm:"not null;type:varchar(256);uniqueIndex:idx_repoUsername_userID"`
-	RepoPassword string `gorm:"not null;type:varchar(256)"`
+	RepoUsername  string `gorm:"not null;type:varchar(256);uniqueIndex:idx_repoUsername_userID"`
+	RepoPassword  string `gorm:"not null;type:varchar(256)"`
+	ServerAddress string `gorm:"not null;type:varchar(256);uniqueIndex:idx_repoUsername_userID"`
 
 	User   User   `gorm:"ForeignKey:UserID;AssociationForeignKey:ID"`
 	UserID string `gorm:"uniqueIndex:idx_repoUsername_userID"`

@@ -8,16 +8,24 @@ import (
 	docker "web/docker_server"
 )
 
-var userAuthConfigurations = map[string][]docker.AuthConfiguration{}
+var userRepositories = map[string]docker.AuthConfiguration{}
 
 func repositoriesList(c *gin.Context) {
-	repositories := docker.ListRepositories()
+	username, _ := c.Get("username")
+	repositories, err := dao.GetAllRepositories(username.(string))
+	if err != nil {
+		c.JSON(200, gin.H{
+			"message": "从数据库库中获取仓库信息失败",
+		})
+		return
+	}
 	if repositories == nil {
 		c.JSON(200, gin.H{
 			"message": "没有登录任何镜像仓库",
 		})
 		return
 	}
+
 	jsonData, err := json.Marshal(repositories)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -65,20 +73,24 @@ func repositoryLogin(c *gin.Context) {
 		return
 	}
 
-	err = docker.LoginRepository(repositoryUsername, repositoryPassword, repository, userClients[username.(string)])
+	err = docker.CheckRepository(repositoryUsername, repositoryPassword, repository, userClients[username.(string)])
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
-			"message": "镜像仓库登录失败",
+			"message": "镜像仓库的地址、用户名或密码错误",
 		})
 		return
 	}
 
-	err = dao.AddRepository(username.(string), repositoryUsername, repositoryPassword)
+	err = dao.AddRepository(username.(string), repositoryUsername, repositoryPassword, repository)
 	if err != nil {
-
+		c.JSON(400, gin.H{
+			"message": "保存镜像仓库信息至数据库失败",
+			"error":   err.Error(),
+		})
 		return
 	}
+
 	c.JSON(200, gin.H{
 		"message": "镜像仓库登录成功",
 	})
@@ -86,6 +98,7 @@ func repositoryLogin(c *gin.Context) {
 func repositoryLogout(c *gin.Context) {
 	data := getJsonParam(c)
 	repository, err := data("repository")
+	repositoryUsername, err := data("repositoryUsername")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
@@ -94,14 +107,17 @@ func repositoryLogout(c *gin.Context) {
 		return
 	}
 
-	err = docker.LogoutRepository(repository)
+	username, _ := c.Get("username")
+	err = dao.RemoveRepository(username.(string), repositoryUsername, repository)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   err.Error(),
+		c.JSON(400, gin.H{
 			"message": "注销镜像仓库失败",
+			"error":   err.Error(),
 		})
 		return
 	}
+	userRepositories[username.(string)] = docker.AuthConfiguration{}
+
 	c.JSON(200, gin.H{
 		"message": "注销镜像仓库成功",
 	})

@@ -34,6 +34,7 @@ func DataBaseStart() error {
 				Colorful:      false,       // 禁用彩色打印
 			},
 		),
+		PrepareStmt: true, //使用软删除
 	})
 	if err != nil {
 		return err
