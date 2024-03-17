@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: redis-stateful-master
+  name: redis-stateful-master
+  namespace: web
+spec:
+  serviceName: redis-service-master
+  replicas: 1  #pod副本数
+  selector:
+    matchLabels:
+      app: redis-pod-master
+  template:
+    metadata:
+      labels:
+        app: redis-pod-master
+    spec:
+#      affinity:
+#        nodeAffinity:
+#          requiredDuringSchedulingIgnoredDuringExecution:
+#            nodeSelectorTerms:
+#              - matchExpressions:
+#                  - key: redis-in
+#                    operator: In
+#                    values:
+#                      - in
+      containers:
+        - image: redis:7.2.4
+          imagePullPolicy: IfNotPresent
+          name: redis-pod-master
+          ports:
+            - containerPort: 6379
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+          volumeMounts: #挂载PV
+            - name: redis-master-data
+              mountPath: /myRedis
+          command:
+            - "redis-server"
+            - "/myRedis/conf/redis.conf"
+
+      volumes:
+        - name: redis-master-data
+          persistentVolumeClaim:
+            claimName: redis-pvc-master
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: redis-stateful-slave
+  name: redis-stateful-slave
+  namespace: web
+spec:
+  serviceName: redis-service-slave
+  replicas: 1  #pod副本数
+  selector:
+    matchLabels:
+      app: redis-pod-slave
+  template:
+    metadata:
+      labels:
+        app: redis-pod-slave
+    spec:
+      #      affinity:
+      #        nodeAffinity:
+      #          requiredDuringSchedulingIgnoredDuringExecution:
+      #            nodeSelectorTerms:
+      #              - matchExpressions:
+      #                  - key: redis-in
+      #                    operator: In
+      #                    values:
+      #                      - in
+      containers:
+        - image: redis:7.2.4
+          imagePullPolicy: IfNotPresent
+          name: redis-pod-slave
+          ports:
+            - containerPort: 6379
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+          volumeMounts: #挂载PV
+            - name: redis-slave-data
+              mountPath: /myRedis
+          command:
+            - "redis-server"
+            - "/myRedis/conf/redis.conf"
+
+      volumes:
+        - name: redis-slave-data
+          persistentVolumeClaim:
+            claimName: redis-pvc-slave

@@ -2,13 +2,26 @@
 mysql:
   user: root
   password: o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG
-  host: 1.94.9.77:1763
+  host: 192.168.30.123:1763
   database: web
   timeout: 5000
 redis:
-  password: o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG
-  host: 1.94.9.77:1764
+  password: redis
+  host: 192.168.30.123:1764
   database: 0
   timeout: 5000
 webLog: logs/web.log
 cookieExpireTime: 3600000
+#mysql:
+#  user: root
+#  password: o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG
+#  host: 1.94.9.77:1763
+#  database: web
+#  timeout: 5000
+#redis:
+#  password: o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG
+#  host: 1.94.9.77:1764
+#  database: 0
+#  timeout: 5000
+#webLog: logs/web.log
+#cookieExpireTime: 3600000

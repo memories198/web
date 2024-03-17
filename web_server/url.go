@@ -49,7 +49,9 @@ func registerUrl() {
 	}
 	router.POST("/user/login", userLogin)
 	router.POST("/user/register", userRegister)
-
+	router.NoRoute(func(c *gin.Context) {
+		c.String(200, "hello")
+	})
 }
 
 func AuthMiddleware() gin.HandlerFunc {

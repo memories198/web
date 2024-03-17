@@ -1,0 +1,85 @@
+#pv 配置， 使用nfs文件系统
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-pv-master
+  namespace: web
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: 192.168.30.198
+    path: /deployments/db_deployments/redis/share_master
+---
+#pvc 配置
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-pvc-master
+  namespace: web
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+#service 配置
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service-master
+  namespace: web
+spec:
+  selector:
+    app: redis-pod-master
+  ports:
+    - protocol: TCP
+      port: 6379 #service暴露的端口
+      targetPort: 6379 #pod的端口
+  type: ClusterIP
+---
+#pv 配置， 使用nfs文件系统
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-pv-slave
+  namespace: web
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: 192.168.30.198
+    path: /deployments/db_deployments/redis/share_slave
+---
+#pvc 配置
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-pvc-slave
+  namespace: web
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+#service 配置
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service-slave
+  namespace: web
+spec:
+  selector:
+    app: redis-pod-slave
+  ports:
+    - protocol: TCP
+      port: 6380 #service暴露的端口
+      targetPort: 6379 #pod的端口
+  type: ClusterIP

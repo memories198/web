@@ -1,0 +1,90 @@
+#deploy 配置
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: web-deploy
+  name: web
+
+spec:
+  replicas: 1  #pod副本数
+  selector:
+    matchLabels:
+      app: web-pod
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: web-pod
+
+    spec:
+      imagePullSecrets:
+        - name: my-registry-ali
+      containers:
+        - image: registry.cn-hangzhou.aliyuncs.com/memories-registry-1/web:4.0
+          imagePullPolicy: IfNotPresent
+          name: web
+          ports:
+            - containerPort: 80
+          livenessProbe: #健康检查
+            httpGet: # tcpSocket
+              path: /
+              port: 80
+          resources:  #资源限制
+            limits:
+              cpu: 100m
+              memory: 400Mi
+            requests:
+              cpu: 10m
+              memory: 100Mi
+
+          volumeMounts: #挂载PV
+            - name: nfs-volume
+              mountPath: /share
+      volumes:
+        - name: nfs-volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc
+
+
+---
+#service 配置
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  selector:
+    app: web-pod
+  ports:
+    #Service 是在网络层（第四层）上工作, protocol 字段指定的是 Service 使用的传输协议
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
+---
+#ingress 配置
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: web-ingress
+#  namespace: web
+#spec:
+#  rules:
+#    - host: docker-manager.com
+#      http:
+#        paths:
+#          - path: /
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: web-service
+#                port:
+#                  number: 80
+#  tls:
+#    - hosts:
+#        - docker-manager.com
+#      secretName: my-tls-secret
