@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  serviceName: mysql
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.3.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: MYSQL_ROOT_PASSWORD
+            - name: TZ
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: TZ
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage #数据卷
+              mountPath: /var/lib/mysql
+            - name: mysql-config-volume #配置文件
+              mountPath: /etc/mysql/my.cnf
+              subPath: my.cnf #只挂载mysql-config中my.cnf的参数
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+        - name: mysql-config-volume
+          configMap:
+            name: mysql-config

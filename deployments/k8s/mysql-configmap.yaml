@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  MYSQL_ROOT_PASSWORD: "o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG"
+  TZ: "Asia/Shanghai"
+  my.cnf: |
+    [mysqld]
+    server-id=200
+    user=mysql #MySQL服务器将以 mysql 用户的身份运行
+    datadir=/var/lib/mysql #MySQL服务器存储数据文件的目录路径
+    socket=/var/lib/mysql/mysql.sock #MySQL服务器与客户端通信的套接字文件路径。客户端用于与服务器进行本地连接。
+    log-bin=mysql-bin #二进制日志文件的文件名
+    relay-log=mysql-relay-bin #中继日志文件的文件名
+    gtid-mode=ON #启用了全局事务标识（GTID）模式。GTID是用于在主从复制中唯一标识事务的一种机制，有助于简化复制拓扑的管理。
+    enforce-gtid-consistency #强制执行GTID一致性。它确保主从服务器在复制过程中遵循GTID的一致性规则，以确保数据的一致性和完整性。
+  
+    default-time-zone='Asia/Shanghai'
+    port = 3306
+    lower_case_table_names = 1
+  
+    general_log = 1
+    general-log-file=/var/log/general.log
+  
+    slow_query_log = 1
+    slow-query-log=/var/log/slow-query.log
+    long_query_time = 1
+  
+    datadir=/var/lib/mysql
+    pid-file=/var/run/mysqld/mysqld.pid
+    log-error=/var/log/mysqld.log
+  
+    [mysql]
+    default-character-set=utf8
+  
+    [client]
+    socket=/var/lib/mysql/mysql.sock
+
