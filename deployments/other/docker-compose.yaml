@@ -1,6 +1,6 @@
 version: "3"
 services:
-  db:
+  mysql:
     image: mysql:8.3.0
     ports:
       - "1763:3306"
@@ -15,6 +15,7 @@ services:
     networks:
       - dbNetwork
     environment:
+      - TZ=Asia/Shanghai
       - MYSQL_ROOT_PASSWORD=o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG
 
   redis:
@@ -30,36 +31,9 @@ services:
       - dbNetwork
     volumes:
       - ./redis/conf:/etc/redis
-      - ./redis/data:/myRedis/data
-      - ./redis/log:/myRedis/log
+      - ./redis/data:/data/data
+      - ./redis/log:/data/log
+    environment:
+      - TZ=Asia/Shanghai
 networks:
   dbNetwork:
-#
-#volumes:
-#  mysql-conf:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      device: /root/deployments/other/mysql/conf
-#      o: bind
-#  mysql-data:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      device: /root/deployments/other/mysql/data
-#      o: bind
-#  mysql-log:
-#    driver_opts:
-#      type: none
-#      device: /root/deployments/other/mysql/log
-#      o: bind
-#  redis-data:
-#    driver_opts:
-#      type: none
-#      device: /root/deployments/other/redis/data
-#      o: bind
-#  redis-conf:
-#    driver_opts:
-#      type: none
-#      device: /root/deployments/other/redis/conf
-#      o: bind

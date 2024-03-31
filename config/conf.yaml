@@ -2,15 +2,15 @@
 mysql:
   user: root
   password: o?dv(%qn)Uf8*e^3AQTPB4k6L1N975xG
-  host: 192.168.30.123:1763
+  host: 192.168.30.30:1763
   database: web
-  timeout: 5000
 redis:
   password: redis
-  host: 192.168.30.123:1764
+  host: 192.168.30.30:1764
   database: 0
   timeout: 5000
 webLog: logs/web.log
+gormLogFile: logs/gorm.log
 cookieExpireTime: 3600000
 #mysql:
 #  user: root

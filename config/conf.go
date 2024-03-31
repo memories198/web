@@ -8,7 +8,8 @@ import (
 var (
 	MysqlConfig      = &Mysql{}
 	RedisConfig      = &Redis{}
-	LogFile          *os.File
+	WebLogFile       *os.File
+	GormLogFile      *os.File
 	CookieExpireTime = 3600000
 )
 
@@ -34,7 +35,8 @@ func Init() error {
 	Config := struct {
 		*Mysql           `yaml:"mysql"`
 		*Redis           `yaml:"redis"`
-		File             string `yaml:"webLog"`
+		WebLogFile       string `yaml:"webLog"`
+		GormLogFile      string `yaml:"gormLogFile"`
 		CookieExpireTime *int   `yaml:"cookieExpireTime"`
 	}{
 		Mysql:            MysqlConfig,
@@ -46,7 +48,11 @@ func Init() error {
 	if err != nil {
 		return err
 	}
-	LogFile, err = os.OpenFile(Config.File, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+	WebLogFile, err = os.OpenFile(Config.WebLogFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+	if err != nil {
+		return err
+	}
+	GormLogFile, err = os.OpenFile(Config.GormLogFile, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err != nil {
 		return err
 	}

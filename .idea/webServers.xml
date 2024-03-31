@@ -3,14 +3,14 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="8bc593e8-7874-4c02-8351-3301df618477" name="77">
-        <fileTransfer accessType="SFTP" host="1.94.9.77" port="22" sshConfigId="a52a3638-8a4d-45f4-81f4-6bae94ba2b80" sshConfig="memories@1.94.9.77:22 key" keyPair="true">
+        <fileTransfer accessType="SFTP" host="1.94.9.77" port="22" sshConfigId="a52a3638-8a4d-45f4-81f4-6bae94ba2b80" sshConfig="root@1.94.9.77:22 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
         </fileTransfer>
       </webServer>
       <webServer id="80e6cec6-4824-44fb-9c75-83e7a0b1c03e" name="123">
-        <fileTransfer accessType="SFTP" host="192.168.30.123" port="22" sshConfigId="c771bfa6-7ccf-4bda-95ad-84acf00e70f1" sshConfig="root@192.168.30.123:22 password">
+        <fileTransfer accessType="SFTP" host="192.168.30.3" port="22" sshConfigId="c771bfa6-7ccf-4bda-95ad-84acf00e70f1" sshConfig="root@192.168.30.3:22 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
@@ -18,6 +18,13 @@
       </webServer>
       <webServer id="bf9202b7-664c-4b6c-92a7-1af8c1c65914" name="198">
         <fileTransfer accessType="SFTP" host="192.168.30.198" port="22" sshConfigId="7d302bd0-7d98-4fbd-b77c-eddd5a3208e9" sshConfig="root@192.168.30.198:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="2793271d-593f-4250-ae1f-84b09ec17019" name="30">
+        <fileTransfer accessType="SFTP" host="192.168.30.30" port="22" sshConfigId="546a4531-1cc6-414c-b20c-1687234a6a77" sshConfig="root@192.168.30.30:22 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

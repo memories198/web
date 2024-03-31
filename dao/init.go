@@ -27,7 +27,7 @@ func DataBaseStart() error {
 		"?timeout=3000ms&readTimeout=5000ms&writeTimeout=5000ms&charset=utf8mb4&parseTime=true&loc=Local"
 	dbSession, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: logger.New(
-			log.New(config.LogFile, "\r\n", log.LstdFlags), // io.Writer
+			log.New(config.GormLogFile, "\r\n", log.LstdFlags), // io.Writer
 			logger.Config{
 				SlowThreshold: time.Second, // 慢查询阈值
 				LogLevel:      logger.Info, // 日志级别
