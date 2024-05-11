@@ -2,7 +2,9 @@ package web_server
 
 import (
 	"errors"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"strconv"
 	"time"
 	"web/config"
@@ -121,21 +123,36 @@ func images(all bool, username, server string) ([]Image, error) {
 }
 
 func setCookie(c *gin.Context, username string) error {
-	_, err := dao.MemoryGetKey(username + "LoginTime")
-	if err == nil {
-		err = dao.MemoryDelKey(username + "LoginTime")
-		if err != nil {
-			return err
-		}
+	token := jwt.New(jwt.SigningMethodHS256)
+
+	// 设置 payload
+	claims := token.Claims.(jwt.MapClaims)
+	claims["username"] = username
+	id := uuid.New()
+	claims["uuid"] = id
+
+	// 设置签名密钥
+	tokenString, err := token.SignedString(serverKey)
+	if err != nil {
+		return err
 	}
 
-	now := strconv.FormatInt(time.Now().UnixNano(), 10)
-	c.SetCookie("loginTime", now, config.CookieExpireTime/1000, "/", "", false, true)
-	c.SetCookie("username", username, config.CookieExpireTime/1000, "/", "", false, true)
-	err = dao.MemorySetKey(username+"LoginTime", now, config.CookieExpireTime/1000)
+	c.SetCookie("token", tokenString, config.CookieExpireTime/1000, "/", "", false, true)
+
+	err = dao.MemorySetKey(username+"TokenUUID", id.String(), config.CookieExpireTime/1000)
 	if err != nil {
-		c.SetCookie("loginTime", now, 0, "/", "", false, true)
 		return err
 	}
 	return nil
+}
+
+func VerifyJWT(tokenString string) (jwt.MapClaims, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return serverKey, nil
+	})
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return claims, nil
+	}
+	return nil, err
 }

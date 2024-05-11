@@ -69,6 +69,5 @@ func MemoryStart() error {
 	}
 
 	rdb = redisDb
-
 	return nil
 }

@@ -83,6 +83,6 @@ func MemoryGetHash(key string) (*User, error) {
 func MemorySetExpire(key string, expireTime int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(config.RedisConfig.Timeout)*time.Millisecond)
 	defer cancel()
-	rdb.Expire(ctx, key, time.Duration(expireTime))
+	rdb.Expire(ctx, key, time.Duration(expireTime)*time.Millisecond)
 	return nil
 }

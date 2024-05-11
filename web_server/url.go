@@ -2,6 +2,7 @@ package web_server
 
 import (
 	"github.com/gin-gonic/gin"
+	"web/config"
 	"web/dao"
 	docker "web/docker_server"
 )
@@ -56,7 +57,7 @@ func registerUrl() {
 
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		loginTime, err := c.Cookie("loginTime")
+		token, err := c.Cookie("token")
 		if err != nil {
 			c.JSON(400, gin.H{
 				"message": "用户未登录",
@@ -65,25 +66,31 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		username, err := c.Cookie("username")
+		jwt, err := VerifyJWT(token)
 		if err != nil {
 			c.JSON(400, gin.H{
-				"message": "用户未登录",
+				"message": "无效的token",
 				"error":   err.Error(),
 			})
 			c.Abort()
 			return
 		}
+		username := jwt["username"].(string)
 
-		lt, err := dao.MemoryGetKey(username + "LoginTime")
+		id, err := dao.MemoryGetKey(username + "TokenUUID")
 		if err != nil {
 			c.JSON(400, gin.H{
-				"message": "获取用户登录时间失败",
+				"message": "获取" + username + "TokenUUID失败",
 				"error":   err.Error(),
 			})
 			c.Abort()
 			return
-		} else if lt != loginTime {
+		} else if func() bool {
+			if id == jwt["uuid"].(string) {
+				return false
+			}
+			return true
+		}() {
 			if err != nil {
 				c.JSON(400, gin.H{
 					"message": "用户名或登录时间不正确",
@@ -94,7 +101,8 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		//更新cookie时间
-		err = setCookie(c, username)
+		c.SetCookie("token", token, config.CookieExpireTime/1000, "/", "", false, true)
+		err = dao.MemorySetExpire(username+"TokenUUID", 3600000)
 		if err != nil {
 			c.JSON(400, gin.H{
 				"message": "更新cookie时间失败",

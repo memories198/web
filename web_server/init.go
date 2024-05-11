@@ -1,6 +1,7 @@
 package web_server
 
 import (
+	"encoding/pem"
 	"github.com/gin-gonic/gin"
 	"io"
 	"os"
@@ -8,6 +9,7 @@ import (
 )
 
 var router *gin.Engine
+var serverKey []byte
 
 func Start() error {
 	gin.SetMode(gin.DebugMode)
@@ -21,7 +23,19 @@ func Start() error {
 	router = r
 	router.MaxMultipartMemory = 1 << 30
 	registerUrl()
-	err := router.Run(":80")
+
+	k, err := os.ReadFile("certificate/server.key")
+	if err != nil {
+		return err
+	}
+	block, rest := pem.Decode(k)
+	if len(rest) != 0 {
+		return err
+	}
+
+	serverKey = block.Bytes
+
+	err = router.Run(":80")
 	if err != nil {
 		return err
 	}
